@@ -10,4 +10,9 @@ import { RouterModule } from '@angular/router';
 })
 export class LayoutComponent {
 
+  authService = inject(AuthService);
+  get isLoggedIn() {
+    return this.authService.isLoggedIn();
+  }
+  // isLoggedIn = this.authService.isLoggedIn();
 }
