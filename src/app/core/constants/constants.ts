@@ -4,8 +4,12 @@ export const ApiEndpoint = {
     Auth: {
         Register: `${apiUrl}/user/signUp`,
         Login: `${apiUrl}/auth/login`,
-        Getallusers: `${apiUrl}/user/all`
+        Getallusers: `${apiUrl}/user/all`,
+        Refreshtoken: `${apiUrl}/auth/refreshToken`
     },
+    Meta: {
+        Roles: `${apiUrl}/meta/roles`,
+    }
 };
 
 export const LocalStorage = {

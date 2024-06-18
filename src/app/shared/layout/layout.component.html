@@ -6,17 +6,22 @@
       </button>
       <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
         <ul class="navbar-nav">
+
+            @if (!isLoggedIn) {
+              <li class="nav-item">
+                <a class="nav-link" routerLink="login">Login</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" routerLink="register">Register</a>
+            </li>
+            } @else {
+              <li class="nav-item">
+                <a class="nav-link active" routerLink="dashboard">Admin Dashboard</a>
+              </li>
+            }
+
           <li class="nav-item">
-            <a class="nav-link active" routerLink="dashboard">Admin Dashboard</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="login">Login</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="register">Register</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+            <a class="nav-link disabled" aria-disabled="true">Logout</a>
           </li>
         </ul>
       </div>

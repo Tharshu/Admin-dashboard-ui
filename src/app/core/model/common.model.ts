@@ -22,13 +22,23 @@ export interface RegisterPayload {
     role: Role;
 }
 
+export interface ApiListResponse<T> {
+    status: string;
+    message?: string;
+    data: T[];
+}
+
 export interface ApiResponse<T> {
     status: string;
-    message: string;
+    message?: string;
     data: T;
 }
 
 export interface LoginResponse {
     accessToken : string;
+    refreshToken: string;
+}
+
+export interface RefreshtokenReqest {
     refreshToken: string;
 }
