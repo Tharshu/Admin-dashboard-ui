@@ -1,8 +1,10 @@
 export interface User{
-    id: number;
-    username: String;
+    userId: number;
+    userName: String;
     email: string;
     password: string;
+    block: boolean;
+    role: Role;
 }
 
 export interface Role{

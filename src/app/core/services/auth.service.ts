@@ -74,14 +74,21 @@ export class AuthService {
   getallusers() {
     // const token = localStorage.getItem(LocalStorage.token);
     const token = this.getUserToken();
-    // if (!token) {
-    //   return null;
-    // }
+
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
     return this._http.get<ApiListResponse<User>>(`${ApiEndpoint.Auth.Getallusers}`, { headers: headers });
     // return this._http.get<ApiListResponse<User>>(`${ApiEndpoint.Auth.Getallusers}`); 
+  }
+
+  updateUserBlockStatus(id: number, block: boolean){
+    const token = this.getUserToken();
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this._http.patch<ApiResponse<string>>(`${ApiEndpoint.Auth.Blockuser}/${id}/${block}`, { headers: headers });
   }
 
   logout() {
