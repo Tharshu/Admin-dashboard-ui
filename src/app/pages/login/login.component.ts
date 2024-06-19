@@ -28,6 +28,9 @@ export class LoginComponent {
       // console.log(this.form.value);
       this.authService.login(this.form.value).subscribe({
         next:(response)=>{
+          if(response.status){
+            this.authService.isLoggedIn.update(() => true);
+          }
           this.router.navigate([''])
           // console.log(response);
         }

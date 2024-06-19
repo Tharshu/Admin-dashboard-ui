@@ -1,14 +1,16 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, inject, signal } from '@angular/core';
 import {
+  ApiListResponse,
   ApiResponse,
   LoginPayload,
   LoginResponse,
+  RefreshtokenReqest,
   RegisterPayload,
   User,
 } from '../model/common.model';
 import { ApiEndpoint, LocalStorage } from '../constants/constants';
-import { map } from 'rxjs';
+import { Observable, catchError, map, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { Console } from 'console';
 
@@ -20,34 +22,73 @@ export class AuthService {
 
   isLoggedIn = signal<boolean>(false);
 
-  constructor(private _http: HttpClient, private router: Router) {}
+  constructor(private _http: HttpClient, private router: Router) {
+    if (this.getUserToken()) {
+      this.isLoggedIn.update(() => true);
+    }
+  }
 
   register(payload: RegisterPayload) {
-    payload.role.id=1;
     return this._http.post<ApiResponse<User>>(
       `${ApiEndpoint.Auth.Register}`,
       payload
     );
   }
 
-  login(payload: LoginPayload) {
+  login(payload: LoginPayload): Observable<ApiResponse<LoginResponse>> {
     return this._http.post<ApiResponse<LoginResponse>>(`${ApiEndpoint.Auth.Login}`, payload)
       .pipe(
-        map((response) => {
-          if(response.status && response.data.accessToken) {
-            console.log("login res=> ",response);
-            const { accessToken, refreshToken } = response.data;
-            localStorage.setItem(LocalStorage.token, response.data.accessToken);
-            localStorage.setItem(LocalStorage.refreshtoken, response.data.refreshToken);
-            this.isLoggedIn.update(() => true);
-          }
-          return response;
-        })
+        map(response => this.handleLoginResponse(response)),
+        catchError(error => this.handleError(error))
       );
   }
 
+  private handleLoginResponse(response: ApiResponse<LoginResponse>): ApiResponse<LoginResponse> {
+    if (response.status) {
+      console.log("login res=>", response);
+      const { accessToken, refreshToken } = response.data;
+      localStorage.setItem(LocalStorage.token, accessToken);
+      localStorage.setItem(LocalStorage.refreshtoken, refreshToken);
+      this.isLoggedIn.update(() => true);
+    }
+    return response;
+  }
+
+  private handleError(error: any): Observable<never> {
+    console.error('Login error:', error);
+    return throwError(() => new Error('Failed to login, please try again.'));
+  }
+
+  getUserToken(){
+    if (typeof localStorage !== 'undefined') {
+      return localStorage.getItem(LocalStorage.token);
+    }
+    return null;
+    // return localStorage.getItem(LocalStorage.token);
+  }
+
+  getrefreshtoken(payload: String){
+    return this._http.post<ApiResponse<LoginResponse>>(`${ApiEndpoint.Auth.Refreshtoken}`, payload);
+  }
+
   getallusers() {
-    return this._http.get<ApiResponse<User>>(`${ApiEndpoint.Auth.Getallusers}`);
+    // const token = localStorage.getItem(LocalStorage.token);
+    const token = this.getUserToken();
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this._http.get<ApiListResponse<User>>(`${ApiEndpoint.Auth.Getallusers}`, { headers: headers });
+    // return this._http.get<ApiListResponse<User>>(`${ApiEndpoint.Auth.Getallusers}`); 
+  }
+
+  updateUserBlockStatus(id: number, block: boolean){
+    const token = this.getUserToken();
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this._http.patch<ApiResponse<string>>(`${ApiEndpoint.Auth.Blockuser}/${id}/${block}`, { headers: headers });
   }
 
   logout() {
