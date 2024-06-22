@@ -1,1 +1,130 @@
-<p>products works!</p>
+<div class="card mt-5">
+  <div class="card-body">
+    <nav class="nav">
+        <button
+        class="nav-link active"
+        id="home-tab"
+        data-bs-toggle="tab"
+        data-bs-target="#home-tab-pane"
+        type="button"
+        role="tab"
+        aria-controls="home-tab-pane"
+        aria-selected="true"
+      >
+        Products
+      </button>
+      <button
+      class="nav-link"
+      id="profile-tab"
+      data-bs-toggle="tab"
+      data-bs-target="#profile-tab-pane"
+      type="button"
+      role="tab"
+      aria-controls="profile-tab-pane"
+      aria-selected="false"
+    >
+      Collections
+    </button>
+    </nav>
+    
+    <div class="tab-content mt-4" id="myTabContent">
+      <div
+        class="tab-pane fade show active"
+        id="home-tab-pane"
+        role="tabpanel"
+        aria-labelledby="home-tab"
+        tabindex="0"
+      >
+      <div class="text-end">
+        <button type="button" class="btn btn-success" (click)="navigateToNewProduct()"><i class="fas fa-plus"></i> New Product</button>
+      </div>
+        <table class="table table-borderless mt-2">
+          <thead class="border border-start-0 border-end-0">
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col" sortable="name">
+                Collection
+              </th>
+              <th scope="col">Status</th>
+              <th scope="col">Availability</th>
+              <th scope="col">
+                Inventory
+              </th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody class="table-group-divider">
+            @for (country of countries; track country.name; let i = $index) {
+            <tr>
+              <th scope="row">
+                <img
+                [src]="
+                  'https://upload.wikimedia.org/wikipedia/commons/' +
+                  country.flag
+                "
+                [alt]="'The flag of ' + country.name"
+                class="me-2"
+                style="width: 20px"
+              />
+                {{ i + 1 }}</th>
+              <td>
+                {{ country.name }}
+              </td>
+              <td>{{ country.area }}</td>
+              <td>{{ country.population }}</td>
+              <td>..</td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+      <div
+        class="tab-pane fade"
+        id="profile-tab-pane"
+        role="tabpanel"
+        aria-labelledby="profile-tab"
+        tabindex="0"
+      >
+      <div class="text-end">
+        <button type="button" class="btn btn-success"><i class="fas fa-plus"></i> New Collection</button>
+      </div>
+        <table class="table table-borderless mt-2">
+          <thead class="border border-start-0 border-end-0">
+            <tr>
+              <th scope="col">No</th>
+              <th scope="col" sortable="name" (sort)="onSort($event)">Title</th>
+              <th scope="col" sortable="area" (sort)="onSort($event)">
+                Handle
+              </th>
+              <th scope="col" sortable="population" (sort)="onSort($event)">
+                Created At
+              </th>
+              <th scope="col" sortable="population" (sort)="onSort($event)">
+                Updated At
+              </th>
+              <th scope="col" sortable="area" (sort)="onSort($event)">
+                Product
+              </th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody class="table-group-divider">
+            @for (country of countries; track country.name; let i = $index) {
+            <tr>
+              <th scope="row">{{ i + 1 }}</th>
+              <td>
+                {{ country.name }}
+              </td>
+              <td>{{ country.area }}</td>
+              <td>{{ country.population }}</td>
+              <td>#</td>
+              <td>#</td>
+              <td>...</td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,24 @@
+.text-danger {
+    color: red;
+  }
+  
+  .text-success {
+    color: green;
+  }
+  
+  .status-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-left: 5px;
+  }
+  
+  .bg-danger {
+    background-color: red;
+  }
+  
+  .bg-success {
+    background-color: green;
+  }
+  

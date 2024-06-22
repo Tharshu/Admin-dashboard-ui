@@ -3,7 +3,7 @@ export interface User{
     userName: String;
     email: string;
     password: string;
-    block: boolean;
+    isBlocked: boolean;
     role: Role;
 }
 

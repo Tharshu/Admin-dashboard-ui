@@ -45,7 +45,6 @@ export class AuthService {
 
   private handleLoginResponse(response: ApiResponse<LoginResponse>): ApiResponse<LoginResponse> {
     if (response.status) {
-      console.log("login res=>", response);
       const { accessToken, refreshToken } = response.data;
       localStorage.setItem(LocalStorage.token, accessToken);
       localStorage.setItem(LocalStorage.refreshtoken, refreshToken);
