@@ -1,17 +1,20 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, ViewChild, inject, signal } from '@angular/core';
 import { AuthService } from '../../core/services/auth.service';
 import { User } from '../../core/model/common.model';
 import { error } from 'console';
 import { CommonModule } from '@angular/common';
+import { SidePanelComponent } from '../../shared/side-panel/side-panel.component';
+import { ToastComponent } from "../../shared/toast/toast.component";
 
 @Component({
-  selector: 'app-dashboard',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.css'
+    selector: 'app-dashboard',
+    standalone: true,
+    templateUrl: './dashboard.component.html',
+    styleUrl: './dashboard.component.css',
+    imports: [CommonModule, ToastComponent]
 })
 export class DashboardComponent implements OnInit{
+  @ViewChild(ToastComponent) toastComponent!: ToastComponent;
   authService = inject(AuthService);
   users: User[] = [];
   isLoggedIn = signal<boolean>(false);
@@ -32,15 +35,17 @@ export class DashboardComponent implements OnInit{
   }
 
   toggleBlock(user: User): void {
-    user.block = !user.block;
+    user.isBlocked = !user.isBlocked;
     // Optionally, make a service call to update the backend
-    this.authService.updateUserBlockStatus(user.userId, user.block).subscribe({
+    this.authService.updateUserBlockStatus(user.userId, user.isBlocked).subscribe({
       next: () => {
-        console.log('User block status updated successfully');
+        this.toastComponent.showSuccessToast(user.isBlocked ? 'User blocked' : 'User unblocked');
+        // console.log('User block status updated successfully');
       },
       error: (error) => {
         console.error('Error updating user block status:', error);
-        user.block = !user.block; // revert change on error
+        user.isBlocked = !user.isBlocked; // revert change on error
+        this.toastComponent.showErrorToast('Failed to update user block status');
       }
     });
   }

@@ -1,0 +1,76 @@
+  .card-title {
+      margin-top: 1rem;
+      /* Add top margin to card title if needed */
+  }
+
+  .row {
+      margin-bottom: 2rem;
+      /* Space between rows */
+  }
+
+  .card-body {
+      min-height: 1px;
+      /* Adjust as needed for card content */
+  }
+
+  .card {
+      background-color: #f8f9fa;
+      border: none;
+      border-radius: 0.5rem;
+      transition: background-color 0.2s;
+  }
+
+  .card:hover {
+      background-color: #e9ecef;
+  }
+
+  .card-body {
+      display: flex;
+      align-items: center;
+  }
+
+  .card-body i {
+      font-size: 1.5rem;
+  }
+
+  .card-body .card-title {
+      margin-bottom: 0.25rem;
+  }
+
+  .card-body .card-text {
+      margin-bottom: 0;
+      font-size: 0.875rem;
+      color: #6c757d;
+  }
+
+  /* 
+  .......................####################################### */
+
+  .card-custom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem;
+      border: 1px solid #e0e0e0;
+      margin-bottom: 1rem;
+      cursor: pointer;
+      background-color: #f8f9fa;
+      border-radius: 0.25rem;
+  }
+
+  .card-custom:hover {
+      background-color: #e9ecef;
+  }
+
+  .icon {
+      font-size: 1.5rem;
+      margin-right: 1rem;
+  }
+
+  .content {
+      flex-grow: 1;
+  }
+
+  .arrow {
+      font-size: 1.5rem;
+  }

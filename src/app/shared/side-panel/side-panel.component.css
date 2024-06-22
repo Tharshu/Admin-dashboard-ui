@@ -1,0 +1,81 @@
+.fixed {
+  position: fixed;
+  top: 4rem; /* 16px from the top, adjust as needed */
+  left: 0;
+  height: calc(100% - 4rem); /* Adjust height considering top space */
+}
+
+.pt-4 {
+  padding-top: 1rem; /* 16px */
+}
+
+.bg-gray-100 {
+  background-color: #f3f4f6; /* Light gray background */
+}
+
+.shadow-lg {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.w-64 {
+  width: 16rem; /* 256px */
+}
+
+.p-4 {
+  padding: 1rem; /* 16px */
+}
+
+.border-r {
+  border-right-width: 1px;
+}
+
+.border-gray-200 {
+  border-color: #e5e7eb;
+}
+
+.list-none {
+  list-style: none;
+}
+
+.p-0 {
+  padding: 0;
+}
+
+.mb-4 {
+  margin-bottom: 1rem; /* 16px */
+}
+
+.text-blue-500 {
+  color: #3b82f6;
+}
+
+.hover\:text-blue-700:hover {
+  color: #1d4ed8;
+}
+
+.hover\:bg-blue-100:hover {
+  background-color: #dbeafe;
+}
+
+.block {
+  display: block;
+}
+
+.py-2 {
+  padding-top: 0.5rem; /* 8px */
+  padding-bottom: 0.5rem; /* 8px */
+}
+
+.px-4 {
+  padding-left: 1rem; /* 16px */
+  padding-right: 1rem; /* 16px */
+}
+
+.rounded {
+  border-radius: 0.375rem; /* 6px */
+}
+
+.active {
+  background-color: #dbeafe; /* Active background color */
+  color: #1d4ed8; /* Active text color */
+}
