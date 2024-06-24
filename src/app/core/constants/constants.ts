@@ -1,4 +1,6 @@
-const apiUrl = 'http://localhost:8181/Authentication';
+import { environment } from "../../../environments/environment.dev";
+
+const apiUrl = environment.apiEndpoint;
 
 export const ApiEndpoint = {
     Auth: {
@@ -10,6 +12,13 @@ export const ApiEndpoint = {
     },
     Meta: {
         Roles: `${apiUrl}/meta/roles`,
+    },
+    Collection: {
+        Collection: `${apiUrl}/v1/api/product/collection`,
+        // GetAllCollection: `${apiUrl}/v1/api/product/collection`,
+        // UpdateCollection: `${apiUrl}/v1/api/product/collection/`,
+        // DeleteCollection: `${apiUrl}/v1/api/product/collection/`,
+        // GelbyId: `${apiUrl}/v1/api/product/collection/`
     }
 };
 

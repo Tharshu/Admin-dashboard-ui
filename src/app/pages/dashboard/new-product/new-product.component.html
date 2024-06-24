@@ -44,10 +44,12 @@
                         <small class="form-text text-muted">Give your product a short and clear description. 120-160 characters is the recommended length for search engines.</small>
                       </div>
                       <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" id="discountable" checked />
-                        <label class="form-check-label" for="discountable">Discountable</label>
-                        <small class="form-text text-muted">When unchecked, discounts will not be applied to this product.</small>
+                        
+                        <label class="form-check-label" for="discountable">Discountable <input class="form-check-input " type="checkbox" id="discountable" checked /> </label>
+                        
+                        
                       </div>
+                      <small class="form-text text-muted">When unchecked, discounts will not be applied to this product.</small>
                     </div>
                   </div>
                 </div>
@@ -55,13 +57,57 @@
             </div>
             <div class="accordion-item">
               <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
-                  Accordion Item #2
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="true" aria-controls="panelsStayOpen-collapseTwo">
+                  Organize Product
                 </button>
               </h2>
               <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
                 <div class="accordion-body">
-                  <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                  
+                  <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#productForm">
+                    <div class="accordion-body">
+                      <div class="mb-3 row">
+                        <div class="col-md-6">
+                          <label for="type" class="form-label">Type</label>
+                          <select class="form-select" id="type">
+                            <option selected>Choose a type</option>
+                            <option value="1">Type 1</option>
+                            <option value="2">Type 2</option>
+                            <option value="3">Type 3</option>
+                          </select>
+                        </div>
+                        <div class="col-md-6">
+                          <label for="collection" class="form-label">Collection</label>
+                          <select class="form-select" id="collection">
+                            <option selected>Choose a collection</option>
+                            <option value="1">Type 1</option>
+                            <option value="2">Type 2</option>
+                            <option value="3">Type 3</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <label for="tags" class="form-label">Tags (comma separated)</label>
+                        <div class="input-group">
+                          <input type="text" class="form-control" formControlName="tagInput" (keyup.enter)="addTags()"/>
+                          <button class="btn btn-outline-secondary" type="button" (click)="addTags()">Add</button>
+                        </div>
+                        <div class="mt-2">
+                          <span *ngFor="let tag of tags" class="badge bg-primary me-1">{{ tag }}
+                            <button type="button" class="btn-close btn-close-white btn-sm ms-2" aria-label="Close" (click)="removeTag(tag)"></button>
+                          </span>
+                        </div>
+                        <input type="hidden" id="tags" [value]="tags.join(',')" />
+                        <!-- <input type="text" class="form-control" id="tags" placeholder="" /> -->
+                      </div>
+                      <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="sales-channels" />
+                        <label class="form-check-label" for="sales-channels">Sales channels</label>
+                        
+                      </div>
+                      <small class="form-text text-muted">This product will only be available in the default sales channel if left untouched.</small>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -78,8 +124,11 @@
               </div>
             </div>
           </div>
-      <button type="button" class="btn btn-primary mt-3">Save as draft</button>
-      <button type="button" class="btn btn-success mt-3 ms-2">Publish product</button>
+          <div class="bottom-spacing">
+            <button type="button" class="btn btn-primary mt-3">Save as draft</button>
+            <button type="button" class="btn btn-success mt-3 ms-2">Publish product</button>
+          </div>
+
     </form>
   </div>
   

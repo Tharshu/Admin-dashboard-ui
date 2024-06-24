@@ -1,7 +1,7 @@
 <div class="card mt-5">
   <div class="card-body">
     <nav class="nav">
-        <button
+      <button
         class="nav-link active"
         id="home-tab"
         data-bs-toggle="tab"
@@ -14,19 +14,19 @@
         Products
       </button>
       <button
-      class="nav-link"
-      id="profile-tab"
-      data-bs-toggle="tab"
-      data-bs-target="#profile-tab-pane"
-      type="button"
-      role="tab"
-      aria-controls="profile-tab-pane"
-      aria-selected="false"
-    >
-      Collections
-    </button>
+        class="nav-link"
+        id="profile-tab"
+        data-bs-toggle="tab"
+        data-bs-target="#profile-tab-pane"
+        type="button"
+        role="tab"
+        aria-controls="profile-tab-pane"
+        aria-selected="false"
+      >
+        Collections
+      </button>
     </nav>
-    
+
     <div class="tab-content mt-4" id="myTabContent">
       <div
         class="tab-pane fade show active"
@@ -35,29 +35,31 @@
         aria-labelledby="home-tab"
         tabindex="0"
       >
-      <div class="text-end">
-        <button type="button" class="btn btn-success" (click)="navigateToNewProduct()"><i class="fas fa-plus"></i> New Product</button>
-      </div>
+        <div class="text-end">
+          <button
+            type="button"
+            class="btn btn-success"
+            (click)="navigateToNewProduct()"
+          >
+            <i class="fas fa-plus"></i> New Product
+          </button>
+        </div>
         <table class="table table-borderless mt-2">
           <thead class="border border-start-0 border-end-0">
             <tr>
               <th scope="col">Name</th>
-              <th scope="col" sortable="name">
-                Collection
-              </th>
+              <th scope="col">Collection</th>
               <th scope="col">Status</th>
               <th scope="col">Availability</th>
-              <th scope="col">
-                Inventory
-              </th>
+              <th scope="col">Inventory</th>
               <th></th>
             </tr>
           </thead>
           <tbody class="table-group-divider">
-            @for (country of countries; track country.name; let i = $index) {
+            <!-- @for (country of countries; track country.name; let i = $index) { -->
             <tr>
               <th scope="row">
-                <img
+                <!-- <img
                 [src]="
                   'https://upload.wikimedia.org/wikipedia/commons/' +
                   country.flag
@@ -65,16 +67,21 @@
                 [alt]="'The flag of ' + country.name"
                 class="me-2"
                 style="width: 20px"
-              />
-                {{ i + 1 }}</th>
+              /> -->
+                <!-- {{ i + 1 }} -->
+              </th>
               <td>
-                {{ country.name }}
+                <!-- {{ country.name }} -->
               </td>
-              <td>{{ country.area }}</td>
-              <td>{{ country.population }}</td>
+              <td>
+                <!-- {{ country.area }} -->
+              </td>
+              <td>
+                <!-- {{ country.population }} -->
+              </td>
               <td>..</td>
             </tr>
-            }
+            <!-- } -->
           </tbody>
         </table>
       </div>
@@ -85,45 +92,159 @@
         aria-labelledby="profile-tab"
         tabindex="0"
       >
-      <div class="text-end">
-        <button type="button" class="btn btn-success"><i class="fas fa-plus"></i> New Collection</button>
-      </div>
+        <div class="text-end">
+          <button
+            type="button"
+            class="btn btn-success"
+            data-bs-toggle="modal"
+            data-bs-target="#newCollectionModal"
+          >
+            <i class="fas fa-plus"></i> New Collection
+          </button>
+        </div>
         <table class="table table-borderless mt-2">
           <thead class="border border-start-0 border-end-0">
             <tr>
-              <th scope="col">No</th>
-              <th scope="col" sortable="name" (sort)="onSort($event)">Title</th>
-              <th scope="col" sortable="area" (sort)="onSort($event)">
-                Handle
-              </th>
-              <th scope="col" sortable="population" (sort)="onSort($event)">
-                Created At
-              </th>
-              <th scope="col" sortable="population" (sort)="onSort($event)">
-                Updated At
-              </th>
-              <th scope="col" sortable="area" (sort)="onSort($event)">
-                Product
-              </th>
+              <!-- <th scope="col">No</th> -->
+              <th scope="col">Title</th>
+              <th scope="col">Handle</th>
+              <th scope="col">Created At</th>
+              <th scope="col">Updated At</th>
+              <th scope="col">Product</th>
               <th></th>
             </tr>
           </thead>
           <tbody class="table-group-divider">
-            @for (country of countries; track country.name; let i = $index) {
+            @for (collection of collections; track collection.id; let i =
+            $index) {
             <tr>
-              <th scope="row">{{ i + 1 }}</th>
+              <!-- <th scope="row">{{ i + 1 }}</th> -->
               <td>
-                {{ country.name }}
+                {{ collection.title }}
               </td>
-              <td>{{ country.area }}</td>
-              <td>{{ country.population }}</td>
+              <td>{{ collection.handle }}</td>
+              <td>{{ collection.createdAt }}</td>
+              <td>{{ collection.updatedAt }}</td>
               <td>#</td>
-              <td>#</td>
-              <td>...</td>
+              <td>
+                <button
+                  type="button"
+                  class="btn btn-danger btn-sm"
+                  (click)="onDeleteCollection(collection)"
+                >
+                  <i class="fas fa-trash-alt"></i> Delete
+                </button>
+              </td>
             </tr>
             }
           </tbody>
         </table>
+
+        <!-- Pagination Controls -->
+        <nav aria-label="Pagination">
+          <ul class="pagination justify-content-end mt-3">
+            <li class="page-item" [class.disabled]="currentPage === 0">
+              <button
+                class="page-link"
+                (click)="onPageChange(currentPage - 1)"
+                [disabled]="currentPage === 0"
+              >
+                Previous
+              </button>
+            </li>
+            <li
+              class="page-item"
+              *ngFor="let _ of totalPagesArray; let i = index"
+              [class.active]="currentPage === i"
+            >
+              <button class="page-link" (click)="onPageChange(i)">
+                {{ i + 1 }}
+              </button>
+            </li>
+            <li
+              class="page-item"
+              [class.disabled]="currentPage === totalPages - 1"
+            >
+              <button
+                class="page-link"
+                (click)="onPageChange(currentPage + 1)"
+                [disabled]="currentPage === totalPages - 1"
+              >
+                Next
+              </button>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="newCollectionModal"
+  tabindex="-1"
+  aria-labelledby="newCollectionModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="newCollectionModalLabel">Add Collection</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="collectionForm" (ngSubmit)="onSubmitCollection()">
+          <div class="mb-3">
+            <label for="title" class="form-label">Title*</label>
+            <input
+              type="text"
+              class="form-control"
+              id="title"
+              formControlName="title"
+              placeholder="Sunglasses"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="handle" class="form-label">Handle</label>
+            <input
+              type="text"
+              class="form-control"
+              id="handle"
+              formControlName="handle"
+              placeholder="/sunglasses"
+            />
+          </div>
+          <!-- <div class="mb-3">
+            <label class="form-label">Metadata</label>
+            <div class="d-flex mb-2">
+              <input type="text" class="form-control me-2" placeholder="Key" formControlName="metaKey">
+              <input type="text" class="form-control" placeholder="Value" formControlName="metaValue">
+            </div>
+          </div> -->
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+            >
+              Publish collection
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   </div>

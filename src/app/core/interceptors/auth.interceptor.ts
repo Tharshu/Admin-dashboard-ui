@@ -1,16 +1,17 @@
-import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
-import { inject } from '@angular/core';
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpHandlerFn, HttpInterceptor, HttpInterceptorFn, HttpRequest } from '@angular/common/http';
+import { Injectable, inject } from '@angular/core';
 import { AuthService } from '../services/auth.service';
-import { catchError, retry, throwError } from 'rxjs';
+import { Observable, catchError, retry, throwError } from 'rxjs';
 import { LocalStorage } from '../constants/constants';
 import { Router } from '@angular/router';
 
+
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  const authService =inject(AuthService);
+  const authService = inject(AuthService);
   const router = inject(Router);
 
   const token = authService.getUserToken();
-  
+
   if (token) {
     console.log("auth interceptor");
     req = req.clone({
@@ -22,19 +23,37 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
   return next(req).pipe(
     retry(2),
-    catchError((e: HttpErrorResponse)=>{
-      if(e.status ===  401){
+    catchError((e: HttpErrorResponse) => {
+      if (e.status === 401) {
         authService.logout();
-        localStorage.removeItem(LocalStorage.token);
+        localStorage.removeItem('token');  // Assuming LocalStorage.token is a string 'token'
         router.navigate(['']);
       }
 
-      const error = e.error.message || e.statusText;
-      return throwError(() => error);
+      // Log the full error response for debugging purposes
+      console.error('HTTP error response:', e);
+
+      // Provide a more detailed default error message
+      const errorMessage = e.error?.message || e.message || `An error occurred: ${e.status} - ${e.statusText}`;
+      return throwError(() => new Error(errorMessage));
     })
   );
 };
 
+// @Injectable()
+// export class AuthInterceptor implements HttpInterceptor {
+//   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+//     const token = localStorage.getItem('token');
+//     if (token) {
+//       const cloned = req.clone({
+//         headers: req.headers.set('Authorization', `Bearer ${token}`)
+//       });
+//       return next.handle(cloned);
+//     } else {
+//       return next.handle(req);
+//     }
+//   }
+// }
 
 // import { Injectable } from '@angular/core';
 // import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpErrorResponse } from '@angular/common/http';

@@ -2,7 +2,7 @@ import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
-import { HttpClientModule, provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule, provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
 
 export const appConfig: ApplicationConfig = {
@@ -12,3 +12,21 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withFetch(),withInterceptors([authInterceptor])),
   ],
 };
+
+// export const appConfig: ApplicationConfig = {
+//   providers: [
+//     provideRouter(routes),
+//     importProvidersFrom(HttpClientModule),
+//     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+//     provideHttpClient(withFetch()),
+//   ],
+// };
+
+
+// export const appConfig: ApplicationConfig = {
+//   providers: [
+//     provideRouter(routes),
+//     importProvidersFrom(HttpClientModule),
+//     { provide: HTTP_INTERCEPTORS, useClass: authInterceptor, multi: true }
+//   ],
+// };

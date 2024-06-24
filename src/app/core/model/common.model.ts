@@ -44,3 +44,14 @@ export interface LoginResponse {
 export interface RefreshtokenReqest {
     refreshToken: string;
 }
+
+export interface ProductCollection {
+    id: string;
+    title: string;
+    handle:string;
+    createdAt:string;
+    updatedAt:string;
+    deletedAt?: string | null; // Optional and can be null
+    metadata?: Record<string, any> | null; 
+    isActive: boolean;
+}
