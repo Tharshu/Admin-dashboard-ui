@@ -1,38 +1,26 @@
-<nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
-    <div class="container">
-      <a class="navbar-brand" href="#">White Label Project</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-        <ul class="navbar-nav">
-
-            @if (!isLoggedIn) {
-              <li class="nav-item">
-                <a class="nav-link" routerLink="login">Login</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" routerLink="register">Register</a>
-            </li>
-            } @else {
-              <li class="nav-item">
-                <a class="nav-link active" routerLink="dashboard">Admin Dashboard</a>
-              </li>
-            }
-
-          <!-- <li class="nav-item">
-            <a class="nav-link disabled" aria-disabled="false">Logout</a>
-          </li> -->
-        </ul>
-      </div>
+<nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+  <div class="container">
+    <a class="navbar-brand" href="#">White Label Project</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav">
+        <!-- Use Angular's *ngIf directive to conditionally render elements based on isLoggedIn status -->
+        <li class="nav-item" *ngIf="!isLoggedIn">
+          <a class="nav-link" routerLink="login">Login</a>
+        </li>
+        <li class="nav-item" *ngIf="!isLoggedIn">
+          <a class="nav-link" routerLink="register">Register</a>
+        </li>
+        <li class="nav-item" *ngIf="isLoggedIn">
+          <a class="nav-link active" routerLink="dashboard">Admin Dashboard</a>
+        </li>
+      </ul>
     </div>
+  </div>
 </nav>
 
-<!-- <div class="col-md-3">
-  <app-side-panel></app-side-panel>
-</div> -->
-
 <main class="container mt-5">
-    <router-outlet></router-outlet>
+  <router-outlet></router-outlet>
 </main>
-

@@ -19,7 +19,7 @@
       </div>
     </div>
   </nav>
-  <div class="container-fluid mt-4">
+  <!-- <div class="container-fluid mt-4">
     <div class="row">
       <div class="col-md-3">
         <app-side-panel></app-side-panel>
@@ -29,5 +29,20 @@
         <router-outlet></router-outlet>
       </div>
     </div>
+  </div> -->
+
+  <div class="container-fluid mt-4">
+    <div class="row">
+      <!-- Side panel -->
+      <div class="col-12 col-md-3 mb-4 mb-md-0">
+        <app-side-panel></app-side-panel>
+      </div>
+      <!-- Main content -->
+      <div class="col-12 col-md-9">
+        <app-toast></app-toast>
+        <router-outlet></router-outlet>
+      </div>
+    </div>
   </div>
+  
   

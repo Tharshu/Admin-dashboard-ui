@@ -22,7 +22,10 @@ import {
 import { Router } from "@angular/router";
 import { NgbModal, NgbModalRef } from "@ng-bootstrap/ng-bootstrap";
 import { ProductService } from "../../../core/services/product.service";
-import { ProductCollection } from "../../../core/model/common.model";
+import {
+  ProductCollection,
+  ProductType,
+} from "../../../core/model/common.model";
 import { response } from "express";
 import { error } from "console";
 
@@ -32,34 +35,6 @@ interface Country {
   area: number;
   population: number;
 }
-
-// const COUNTRIES: Country[] = [
-//   {
-//     name: "Russia",
-//     flag: "f/f3/Flag_of_Russia.svg",
-//     area: 17075200,
-//     population: 146989754,
-//   },
-//   {
-//     name: "Canada",
-//     flag: "c/cf/Flag_of_Canada.svg",
-//     area: 9976140,
-//     population: 36624199,
-//   },
-//   {
-//     name: "United States",
-//     flag: "a/a4/Flag_of_the_United_States.svg",
-//     area: 9629091,
-//     population: 324459463,
-//   },
-//   {
-//     name: "China",
-//     flag: "f/fa/Flag_of_the_People%27s_Republic_of_China.svg",
-//     area: 9596960,
-//     population: 1409517397,
-//   },
-// ];
-
 export type SortColumn = keyof ProductCollection | "";
 export type SortDirection = "asc" | "desc" | "";
 const rotate: { [key: string]: SortDirection } = {
@@ -108,6 +83,7 @@ export class ProductsComponent implements OnInit {
   private modalRef?: NgbModalRef;
   productService = inject(ProductService);
   collections: ProductCollection[] = [];
+  type: ProductType[] = [];
   currentPage = 0;
   pageSize = 10;
   totalItems = 0;
@@ -125,14 +101,16 @@ export class ProductsComponent implements OnInit {
     });
   }
   ngOnInit(): void {
-    this.productService.getAllCollection(this.currentPage,this.pageSize).subscribe({
-      next: (response) => {
-        this.collections = response.data;
-      },
-      error: (error) => {
-        console.error("Error fetching users:", error);
-      },
-    });
+    this.productService
+      .getAllCollection(this.currentPage, this.pageSize)
+      .subscribe({
+        next: (response) => {
+          this.collections = response.data;
+        },
+        error: (error) => {
+          console.error("Error fetching users:", error);
+        },
+      });
   }
 
   jsonValidator(control: FormControl) {
@@ -161,7 +139,7 @@ export class ProductsComponent implements OnInit {
       this.productService.createCollection(payload).subscribe({
         next: (response) => {
           console.log("Successfully created collection!", response);
-          this.getFormData();
+          this.getCollectionData();
           if (this.modalRef) {
             this.modalRef.close();
           }
@@ -173,40 +151,47 @@ export class ProductsComponent implements OnInit {
     }
   }
 
-
   onDeleteCollection(collection: ProductCollection) {
-    if (confirm(`Are you sure you want to delete collection "${collection.title}"?`)) {
-
+    if (
+      confirm(
+        `Are you sure you want to delete collection "${collection.title}"?`
+      )
+    ) {
       let id: string = collection.id;
-      console.log("collection id {}",id);
+      console.log("collection id {}", id);
       this.productService.deleteCollection(id).subscribe({
         next: () => {
           console.log(`Collection "${collection.title}" deleted successfully.`);
-          this.getFormData(); // Refresh the table data after deletion
+          this.getCollectionData(); // Refresh the table data after deletion
         },
         error: (error) => {
-          console.error(`Error deleting collection "${collection.title}"`, error);
-        }
+          console.error(
+            `Error deleting collection "${collection.title}"`,
+            error
+          );
+        },
       });
     }
   }
 
-  getFormData() {
-    this.productService.getAllCollection(this.currentPage, this.pageSize).subscribe({
-      next: (data) => {
-        this.collections = data.data; // Adjust this based on your actual response structure
-        // this.totalItems = data.totalItems; // Adjust this based on your actual response structure
-        console.log("Table data refreshed:", this.collections);
-      },
-      error: (error) => {
-        console.error("Error fetching collections", error);
-      },
-    });
+  getCollectionData() {
+    this.productService
+      .getAllCollection(this.currentPage, this.pageSize)
+      .subscribe({
+        next: (data) => {
+          this.collections = data.data; // Adjust this based on your actual response structure
+          // this.totalItems = data.totalItems; // Adjust this based on your actual response structure
+          console.log("Table data refreshed:", this.collections);
+        },
+        error: (error) => {
+          console.error("Error fetching collections", error);
+        },
+      });
   }
 
   onPageChange(page: number) {
     this.currentPage = page;
-    this.getFormData();
+    this.getCollectionData();
   }
 
   trackById(index: number, item: ProductCollection) {
@@ -218,14 +203,14 @@ export class ProductsComponent implements OnInit {
   }
 
   get totalPagesArray(): number[] {
-    return Array(this.totalPages).fill(0).map((x, i) => i);
+    return Array(this.totalPages)
+      .fill(0)
+      .map((x, i) => i);
   }
 
   navigateToNewProduct() {
     this.router.navigate(["/new-product"]);
   }
-
-  // countries = ProductCollection;
 
   @ViewChildren(NgbdSortableHeader)
   headers!: QueryList<NgbdSortableHeader>;
@@ -237,15 +222,5 @@ export class ProductsComponent implements OnInit {
         header.direction = "";
       }
     }
-
-    // sorting countries
-    // if (direction === "" || column === "") {
-    //   this.countries = ProductCollection;
-    // } else {
-    //   this.countries = [...COUNTRIES].sort((a, b) => {
-    //     const res = compare(a[column], b[column]);
-    //     return direction === "asc" ? res : -res;
-    //   });
-    // }
   }
 }
