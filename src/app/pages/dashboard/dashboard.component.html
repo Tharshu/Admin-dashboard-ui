@@ -1,15 +1,18 @@
 <app-toast></app-toast>
 
-
 <div class="card">
-    <div class="card-body">
-      <h5 class="card-title">Welcome </h5>
-      <h6 class="card-subtitle mb-2 text-body-secondary">Admin Dash board</h6>
-      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-      <button type="button" class="btn btn-success" (click)="logout()">Logout</button>
-    </div>
+  <div class="card-body">
+    <h5 class="card-title">Welcome</h5>
+    <h6 class="card-subtitle mb-2 text-body-secondary">Admin Dash board</h6>
+    <p class="card-text">
+      Some quick example text to build on the card title and make up the bulk of
+      the card's content.
+    </p>
+    <button type="button" class="btn btn-success" (click)="logout()">
+      Logout
+    </button>
+  </div>
 </div>
-
 
 <div class="d-flex justify-content-center mt-4">
   <table class="table table-borderless">
@@ -23,32 +26,54 @@
       </tr>
     </thead>
     <tbody>
+      <!-- Spinner displayed while loading -->
+      <div
+        *ngIf="loading"
+        class="d-flex justify-content-center align-items-center position-fixed w-100 h-100"
+        style="top: 0; left: 0"
+      >
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+
       <tr *ngFor="let user of users; let i = index">
         <!-- <th scope="row">{{ i + 1 }}</th> -->
-        <td>{{ user.userId }}</td>  
-        <td>{{ user.userName }}</td>   <!-- Adjust the property names according to your data structure -->
-        <td>{{ user.email }}</td>     <!-- Adjust the property names according to your data structure -->
+        <td>{{ user.userId }}</td>
+        <td>{{ user.userName }}</td>
+        <td>{{ user.email }}</td>
         <td>{{ user.role.name }}</td>
         <td>
           <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault{{i}}" [checked]="!user.isBlocked" (change)="toggleBlock(user)">
-            <!-- <label class="form-check-label" for="flexSwitchCheckDefault{{i}}">Block</label> -->
-            <label class="form-check-label" for="flexSwitchCheckDefault{{i}}">
-              <span [ngClass]="{'text-danger': user.isBlocked, 'text-success': !user.isBlocked}">
-                {{ user.isBlocked ? 'Blocked' : 'Active' }}
-                <span 
-                  class="status-dot" 
-                  [ngClass]="{'bg-danger': user.isBlocked, 'bg-success': !user.isBlocked}">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              role="switch"
+              id="flexSwitchCheckDefault{{ i }}"
+              [checked]="!user.isBlocked"
+              (change)="toggleBlock(user)"
+            />
+            <label class="form-check-label" for="flexSwitchCheckDefault{{ i }}">
+              <span
+                [ngClass]="{
+                  'text-danger': user.isBlocked,
+                  'text-success': !user.isBlocked
+                }"
+              >
+                {{ user.isBlocked ? "Blocked" : "Active" }}
+                <span
+                  class="status-dot"
+                  [ngClass]="{
+                    'bg-danger': user.isBlocked,
+                    'bg-success': !user.isBlocked
+                  }"
+                >
                 </span>
               </span>
             </label>
           </div>
         </td>
-        <!-- <td>{{ user.block}}</td> -->
       </tr>
     </tbody>
-  
   </table>
 </div>
-
-

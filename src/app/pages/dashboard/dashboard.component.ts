@@ -18,9 +18,10 @@ export class DashboardComponent implements OnInit{
   authService = inject(AuthService);
   users: User[] = [];
   isLoggedIn = signal<boolean>(false);
-
+  loading: boolean = true;
 
   ngOnInit(): void {
+    this.loadData();
 
     this.isLoggedIn.update(()=> this.authService.isLoggedIn());
 
@@ -32,6 +33,21 @@ export class DashboardComponent implements OnInit{
         console.error('Error fetching users:', error);
       }
     })
+  }
+
+
+  loadData() {
+    this.loading = true;
+    this.authService.getallusers().subscribe(
+      data => {
+        this.users = data.data;
+        this.loading = false;
+      },
+      error => {
+        console.error(error);
+        this.loading = false;
+      }
+    );
   }
 
   toggleBlock(user: User): void {
