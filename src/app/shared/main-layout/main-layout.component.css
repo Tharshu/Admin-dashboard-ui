@@ -1,18 +1,40 @@
 .container-fluid {
-    display: flex;
+  display: flex;
+}
+
+.row {
+  width: 100%;
+}
+
+.col-md-3 {
+  flex: 0 0 25%;
+  max-width: 18%;
+}
+
+.col-md-9 {
+  flex: 0 0 75%;
+  max-width: 75%;
+}
+
+/* Add custom styles in your CSS file or inside a <style> tag */
+
+/* For small devices (phones, less than 768px) */
+@media (max-width: 767.98px) {
+  .container-fluid {
+    padding: 0 15px;
   }
-  
-  .row {
-    width: 100%;
+}
+
+/* For medium devices (tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .container-fluid {
+    padding: 0 30px;
   }
-  
-  .col-md-3 {
-    flex: 0 0 25%;
-    max-width: 18%;
+}
+
+/* For large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+  .container-fluid {
+    padding: 0 60px;
   }
-  
-  .col-md-9 {
-    flex: 0 0 75%;
-    max-width: 75%;
-  }
-  
+}

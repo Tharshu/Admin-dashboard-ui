@@ -71,18 +71,14 @@
                           <label for="type" class="form-label">Type</label>
                           <select class="form-select" id="type">
                             <option selected>Choose a type</option>
-                            <option value="1">Type 1</option>
-                            <option value="2">Type 2</option>
-                            <option value="3">Type 3</option>
+                            <option class="form-control" *ngFor="let type of types" [value]="type.id">{{ type.value }}</option>
                           </select>
                         </div>
                         <div class="col-md-6">
                           <label for="collection" class="form-label">Collection</label>
                           <select class="form-select" id="collection">
                             <option selected>Choose a collection</option>
-                            <option value="1">Type 1</option>
-                            <option value="2">Type 2</option>
-                            <option value="3">Type 3</option>
+                            <option class="form-control" *ngFor="let collection of collections" [value]="collection.id">{{ collection.title }}</option>
                           </select>
                         </div>
                       </div>

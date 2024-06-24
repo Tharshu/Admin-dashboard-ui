@@ -4,6 +4,7 @@ import {
   ApiListResponse,
   ApiResponse,
   ProductCollection,
+  ProductType,
 } from "../model/common.model";
 import { ApiEndpoint, LocalStorage } from "../constants/constants";
 import { Observable, catchError, throwError } from "rxjs";
@@ -29,7 +30,7 @@ export class ProductService {
     });
     return this.http
       .post<ApiResponse<ProductCollection>>(
-        `${ApiEndpoint.Collection.Collection}`,
+        `${ApiEndpoint.Product.Collection}`,
         payload,
         { headers: headers }
       )
@@ -44,7 +45,7 @@ export class ProductService {
     });
     return this.http
       .get<ApiListResponse<ProductCollection>>(
-        `${ApiEndpoint.Collection.Collection}?page=${page}&size=${size}&sort=${sort}`,
+        `${ApiEndpoint.Product.Collection}?page=${page}&size=${size}&sort=${sort}`,
         { headers: headers }
       )
       .pipe(catchError(this.handleError));
@@ -57,16 +58,20 @@ export class ProductService {
       Authorization: `Bearer ${token}`,
     });
     return this.http.delete<ApiResponse<string>>(
-      `${ApiEndpoint.Collection.Collection}/${id}`
+      `${ApiEndpoint.Product.Collection}/${id}`
     )
   }
 
-  // createCollection(payload: ProductCollection): Observable<ApiResponse<ProductCollection>> {
-  //   return this.http.post<ApiResponse<ProductCollection>>(`${ApiEndpoint.Collection.Collection}`, payload)
-  //     .pipe(
-  //       catchError(this.handleError)
-  //     );
-  // }
+  getAllType() {
+    const token = this.getUserToken();
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.get<ApiListResponse<ProductType>>(
+      `${ApiEndpoint.Product.Type}`, {headers: headers}
+    ).pipe(catchError(this.handleError));
+  }
 
   private handleError(error: any): Observable<never> {
     console.error("An error occurred:", error);

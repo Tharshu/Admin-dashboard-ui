@@ -13,8 +13,9 @@ export const ApiEndpoint = {
     Meta: {
         Roles: `${apiUrl}/meta/roles`,
     },
-    Collection: {
+    Product: {
         Collection: `${apiUrl}/v1/api/product/collection`,
+        Type:`${apiUrl}/v1/api/product/product-type`
         // GetAllCollection: `${apiUrl}/v1/api/product/collection`,
         // UpdateCollection: `${apiUrl}/v1/api/product/collection/`,
         // DeleteCollection: `${apiUrl}/v1/api/product/collection/`,

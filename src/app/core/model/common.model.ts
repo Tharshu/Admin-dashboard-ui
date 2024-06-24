@@ -55,3 +55,8 @@ export interface ProductCollection {
     metadata?: Record<string, any> | null; 
     isActive: boolean;
 }
+
+export interface ProductType {
+    id: string;
+    value: string;
+}
