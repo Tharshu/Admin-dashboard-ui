@@ -3,6 +3,8 @@ import { Injectable } from "@angular/core";
 import {
   ApiListResponse,
   ApiResponse,
+  PageResponse,
+  Product,
   ProductCollection,
   ProductType,
 } from "../model/common.model";
@@ -70,6 +72,28 @@ export class ProductService {
     });
     return this.http.get<ApiListResponse<ProductType>>(
       `${ApiEndpoint.Product.Type}`, {headers: headers}
+    ).pipe(catchError(this.handleError));
+  }
+
+  createProduct(payload: Product){
+    const token = this.getUserToken();
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.post<ApiResponse<Product>>(
+      `${ApiEndpoint.Product.Prod}/save`,payload ,{headers: headers}
+    ).pipe(catchError(this.handleError));
+  }
+
+  getAllProductFilter(){
+    const token = this.getUserToken();
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.get<ApiResponse<PageResponse<Product>>>(
+      `${ApiEndpoint.Product.Prod}/filter`, {headers: headers}
     ).pipe(catchError(this.handleError));
   }
 

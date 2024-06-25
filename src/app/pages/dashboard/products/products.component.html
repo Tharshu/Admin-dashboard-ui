@@ -56,7 +56,7 @@
             </tr>
           </thead>
           <tbody class="table-group-divider">
-            <!-- @for (country of countries; track country.name; let i = $index) { -->
+            @for (product of products; track product.id; let i = $index) {
             <tr>
               <th scope="row">
                 <!-- <img
@@ -69,19 +69,20 @@
                 style="width: 20px"
               /> -->
                 <!-- {{ i + 1 }} -->
+                  {{product.title}}
               </th>
               <td>
-                <!-- {{ country.name }} -->
+                {{ product.collectionId }}
               </td>
               <td>
-                <!-- {{ country.area }} -->
+                {{ product.status }}
               </td>
               <td>
-                <!-- {{ country.population }} -->
+                {{ product.material }}
               </td>
               <td>..</td>
             </tr>
-            <!-- } -->
+            }
           </tbody>
         </table>
       </div>

@@ -15,7 +15,8 @@ export const ApiEndpoint = {
     },
     Product: {
         Collection: `${apiUrl}/v1/api/product/collection`,
-        Type:`${apiUrl}/v1/api/product/product-type`
+        Type:`${apiUrl}/v1/api/product/product-type`,
+        Prod:`${apiUrl}/v1/api/product`
         // GetAllCollection: `${apiUrl}/v1/api/product/collection`,
         // UpdateCollection: `${apiUrl}/v1/api/product/collection/`,
         // DeleteCollection: `${apiUrl}/v1/api/product/collection/`,
