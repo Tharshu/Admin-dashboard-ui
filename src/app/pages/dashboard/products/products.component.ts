@@ -85,7 +85,7 @@ export class ProductsComponent implements OnInit {
   productService = inject(ProductService);
   collections: ProductCollection[] = [];
   type: ProductType[] = [];
-  products : Product[] = [];
+  products: Product[] = [];
   currentPage = 0;
   pageSize = 10;
   totalItems = 0;
@@ -102,6 +102,22 @@ export class ProductsComponent implements OnInit {
       metaValue: new FormControl(""),
     });
   }
+  togglePopover(product: any): void {
+    // Toggle popover state for the product
+    product.showPopover = !product.showPopover;
+  }
+  editProduct(_t21: Product) {
+    throw new Error("Method not implemented.");
+  }
+  deleteProduct(_t21: Product) {
+    throw new Error("Method not implemented.");
+  }
+  duplicateProduct(_t21: Product) {
+    throw new Error("Method not implemented.");
+  }
+  changeStatus(_t21: Product) {
+    throw new Error("Method not implemented.");
+  }
   ngOnInit(): void {
     this.getAllProduct();
     this.productService
@@ -116,16 +132,17 @@ export class ProductsComponent implements OnInit {
       });
   }
 
-  getAllProduct(){
-   this.productService.getAllProductFilter().subscribe({
-    next: (data) => {
-      this.products = data.data.content;
-      console.log("Table data refreshed:", this.products);
-    },
-    error: (error) => {
-      console.error("Error fetching products", error);
-    }
-   }) 
+
+  getAllProduct() {
+    this.productService.getAllProductFilter().subscribe({
+      next: (data) => {
+        this.products = data.data.content;
+        console.log("Table data refreshed:", this.products);
+      },
+      error: (error) => {
+        console.error("Error fetching products", error);
+      },
+    });
   }
 
   jsonValidator(control: FormControl) {
