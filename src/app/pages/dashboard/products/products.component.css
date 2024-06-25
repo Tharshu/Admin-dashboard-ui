@@ -1,0 +1,23 @@
+.status-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-left: 8px;
+}
+
+.status-text {
+  text-transform: uppercase;
+}
+
+.bg-success {
+  background-color: green;
+}
+
+.bg-secondary {
+  background-color: gray;
+}
+
+.bg-danger {
+  background-color: red;
+}

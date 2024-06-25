@@ -69,18 +69,69 @@
                 style="width: 20px"
               /> -->
                 <!-- {{ i + 1 }} -->
-                  {{product.title}}
+                {{ product.title }}
               </th>
               <td>
                 {{ product.collectionId }}
               </td>
               <td>
-                {{ product.status }}
+                <span
+                  class="status-dot"
+                  [ngClass]="{
+                    'bg-success': product.status === 'published',
+                    'bg-secondary': product.status === 'draft',
+                    'bg-danger': product.status === 'rejected'
+                  }"
+                >
+                </span>
+                <span class="status-text">
+                  {{
+                    product.status === "published"
+                      ? "published"
+                      : product.status === "draft"
+                      ? "draft"
+                      : "rejected"
+                  }}
+                </span>
               </td>
               <td>
                 {{ product.material }}
               </td>
-              <td>..</td>
+              <td>
+                #
+              </td>
+              <td>
+                <!-- Bootstrap Popover -->
+                <div class="btn-group">
+                  <i class="fa-solid fa-ellipsis" data-bs-toggle="dropdown"
+                  aria-expanded="false"></i>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <a class="dropdown-item" (click)="editProduct(product)"
+                        ><i class="fa-solid fa-sliders"></i> Edit</a
+                      >
+                    </li>
+                    <li>
+                      <a class="dropdown-item" (click)="deleteProduct(product)"
+                        ><i class="fa-solid fa-trash"></i> Delete</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        (click)="duplicateProduct(product)"
+                        ><i class="fa-solid fa-copy"></i> Duplicate</a
+                      >
+                    </li>
+                    <li>
+                      <a class="dropdown-item" (click)="changeStatus(product)">
+                        <i class="fa-solid fa-upload"></i> 
+                        {{ product.status === 'published' ? 'draft' : 'publish' }}
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </td>
             </tr>
             }
           </tbody>

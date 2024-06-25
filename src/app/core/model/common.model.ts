@@ -64,6 +64,7 @@ export interface ProductType {
 type ProductStatus = 'draft' | 'proposed' | 'published' | 'rejected';
 
 export interface Product {
+showDropdown: any;
     id: string;
     title: string;
     subtitle: string;
