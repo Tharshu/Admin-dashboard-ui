@@ -60,3 +60,62 @@ export interface ProductType {
     id: string;
     value: string;
 }
+
+type ProductStatus = 'draft' | 'proposed' | 'published' | 'rejected';
+
+export interface Product {
+    id: string;
+    title: string;
+    subtitle: string;
+    description: string;
+    handle: string;
+    isGiftcard: boolean;
+    status: ProductStatus;
+    thumbnail: string;
+    collectionId: ProductCollection;
+    typeId: ProductType;
+    discountable: boolean;
+    externalId: string;
+    profileId: string;
+    weight: number;  // Using number for BigDecimal
+    length: number;  // Assuming similar types for other dimensions
+    height: number;
+    width: number;
+    hsCode: string;
+    originCountry: string;
+    midCode: string;
+    material: string;
+    createdAt: string;
+    updatedAt: string;
+    deletedAt: string;
+}
+
+export interface Pageable {
+    pageNumber: number;
+    pageSize: number;
+    sort: Sort;
+    offset: number;
+    paged: boolean;
+    unpaged: boolean;
+}
+
+export interface Sort {
+    sorted: boolean;
+    empty: boolean;
+    unsorted: boolean;
+}
+
+export interface PageResponse<T> {
+    content: T[];
+    pageable: Pageable;
+    totalPages: number;
+    totalElements: number;
+    last: boolean;
+    size: number;
+    number: number;
+    sort: Sort;
+    numberOfElements: number;
+    first: boolean;
+    empty: boolean;
+}
+

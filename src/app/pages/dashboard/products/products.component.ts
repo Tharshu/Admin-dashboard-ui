@@ -23,6 +23,7 @@ import { Router } from "@angular/router";
 import { NgbModal, NgbModalRef } from "@ng-bootstrap/ng-bootstrap";
 import { ProductService } from "../../../core/services/product.service";
 import {
+  Product,
   ProductCollection,
   ProductType,
 } from "../../../core/model/common.model";
@@ -84,6 +85,7 @@ export class ProductsComponent implements OnInit {
   productService = inject(ProductService);
   collections: ProductCollection[] = [];
   type: ProductType[] = [];
+  products : Product[] = [];
   currentPage = 0;
   pageSize = 10;
   totalItems = 0;
@@ -101,6 +103,7 @@ export class ProductsComponent implements OnInit {
     });
   }
   ngOnInit(): void {
+    this.getAllProduct();
     this.productService
       .getAllCollection(this.currentPage, this.pageSize)
       .subscribe({
@@ -111,6 +114,18 @@ export class ProductsComponent implements OnInit {
           console.error("Error fetching users:", error);
         },
       });
+  }
+
+  getAllProduct(){
+   this.productService.getAllProductFilter().subscribe({
+    next: (data) => {
+      this.products = data.data.content;
+      console.log("Table data refreshed:", this.products);
+    },
+    error: (error) => {
+      console.error("Error fetching products", error);
+    }
+   }) 
   }
 
   jsonValidator(control: FormControl) {
