@@ -97,6 +97,40 @@ export class ProductService {
     ).pipe(catchError(this.handleError));
   }
 
+  editProduct(payload: Product, id:String){
+    const token = this.getUserToken();
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.put<ApiResponse<Product>>(
+      `${ApiEndpoint.Product.Prod}/${id}`,payload, {headers: headers}
+    ).pipe(catchError(this.handleError));
+  }
+
+  deleteProduct(id: String){
+    const token = this.getUserToken();
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this.http.delete<ApiResponse<String>>(
+      `${ApiEndpoint.Product.Prod}/${id}`, {headers: headers}
+    ).pipe(catchError(this.handleError));
+  }
+
+  changeStatus(id: String, status: String){
+    const token = this.getUserToken();
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.patch<ApiResponse<String>>(
+      `${ApiEndpoint.Product.Prod}/${id}/${status}`, {headers: headers}
+    ).pipe(catchError(this.handleError));
+  }
+
   private handleError(error: any): Observable<never> {
     console.error("An error occurred:", error);
     return throwError(

@@ -2,3 +2,28 @@
     margin-bottom: 20px;
     /* Adjust the value as needed */
 }
+.price-group {
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+  .price-group .form-row {
+    align-items: center;
+  }
+  
+  .price-group .form-row .col {
+    margin-bottom: 5px;
+  }
+  
+  .price-group .form-row .col-auto {
+    display: flex;
+    align-items: center;
+  }
+  
+  .price-group hr {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  

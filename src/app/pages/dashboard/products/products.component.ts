@@ -28,7 +28,7 @@ import {
   ProductType,
 } from "../../../core/model/common.model";
 import { response } from "express";
-import { error } from "console";
+import { Console, error } from "console";
 
 interface Country {
   name: string;
@@ -86,6 +86,8 @@ export class ProductsComponent implements OnInit {
   collections: ProductCollection[] = [];
   type: ProductType[] = [];
   products: Product[] = [];
+  product: Product | undefined;
+  res: String | undefined;
   currentPage = 0;
   pageSize = 10;
   totalItems = 0;
@@ -106,17 +108,49 @@ export class ProductsComponent implements OnInit {
     // Toggle popover state for the product
     product.showPopover = !product.showPopover;
   }
-  editProduct(_t21: Product) {
-    throw new Error("Method not implemented.");
+  editProduct(_t21: Product, id:String) {
+    this.productService.editProduct(_t21,id).subscribe(
+      {
+        next: (response) => {
+          this.product = response.data;
+          this.getAllProduct();
+        },
+        error: (error) => {
+          console.error("error updating product", error)
+        }
+      }
+    )
   }
-  deleteProduct(_t21: Product) {
-    throw new Error("Method not implemented.");
+  deleteProduct(_id: String) {
+    this.productService.deleteProduct(_id).subscribe(
+      {
+        next: (response) => {
+          this.res = response.data;
+          this.getAllProduct();
+        },
+        error: (error) => {
+          console.error("error deleting product", error)
+        }
+      }
+    )
   }
+
   duplicateProduct(_t21: Product) {
     throw new Error("Method not implemented.");
   }
-  changeStatus(_t21: Product) {
-    throw new Error("Method not implemented.");
+  changeStatus(id: String,status: String) {
+    this.productService.changeStatus(id,status).subscribe(
+      {
+        next: (response) => {
+          this.res = response.data;
+          console.log("Res => ",this.res);
+          this.getAllProduct();
+        },
+        error: (error) => {
+          console.error("error updating status.");
+        }
+      }
+    )
   }
   ngOnInit(): void {
     this.getAllProduct();

@@ -10,6 +10,11 @@ import { ProductsComponent } from './pages/dashboard/products/products.component
 import { SettingComponent } from './pages/dashboard/setting/setting.component';
 import { OrdersComponent } from './pages/dashboard/orders/orders.component';
 import { NewProductComponent } from './pages/dashboard/new-product/new-product.component';
+import { CurrenciesComponent } from './pages/dashboard/currencies/currencies.component';
+import { RegionsComponent } from './pages/dashboard/regions/regions.component';
+import { ProfileComponent } from './pages/dashboard/profile/profile.component';
+import { ReasonsComponent } from './pages/dashboard/reasons/reasons.component';
+import { InventoryComponent } from './pages/dashboard/inventory/inventory.component';
 
 export const routes: Routes = [
 
@@ -22,7 +27,20 @@ export const routes: Routes = [
           { path: 'orders', component: OrdersComponent},
           { path: 'products', component: ProductsComponent},
           { path: 'new-product', component: NewProductComponent},
-          { path: 'settings', component: SettingComponent},
+          { path: 'settings', component: SettingComponent,
+            // children: [
+            //   { path: 'profile', component: ProfileComponent },
+            //   { path: 'currencies', component: CurrenciesComponent},
+            //   { path: 'regions', component: RegionsComponent},
+            //   { path: 'profile', component: ProfileComponent},
+            //   { path: 'reasons', component: ReasonsComponent}
+            // ]
+          },
+          { path: 'settings/profile', component: ProfileComponent },
+          { path: 'settings/currencies', component: CurrenciesComponent },
+          { path: 'settings/regions', component: RegionsComponent },
+          { path: 'settings/reasons', component: ReasonsComponent },
+          { path: 'settings/inventory', component: InventoryComponent},
 
         ]
       },

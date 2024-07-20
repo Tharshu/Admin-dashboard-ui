@@ -5,118 +5,276 @@
     </button>
   </div>
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
-      <div class="accordion mt-3" id="accordionPanelsStayOpenExample">
-          <div class="accordion-item">
-            <h2 class="accordion-header">
-              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-                General Information *
-              </button>
-            </h2>
-            <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+    <div class="accordion mt-3" id="accordionPanelsStayOpenExample">
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button
+            class="accordion-button"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#panelsStayOpen-collapseOne"
+            aria-expanded="true"
+            aria-controls="panelsStayOpen-collapseOne"
+          >
+            General Information *
+          </button>
+        </h2>
+        <div
+          id="panelsStayOpen-collapseOne"
+          class="accordion-collapse collapse show"
+        >
+          <div class="accordion-body">
+            <div
+              id="collapseOne"
+              class="accordion-collapse collapse show"
+              aria-labelledby="headingOne"
+              data-bs-parent="#productForm"
+            >
               <div class="accordion-body">
-                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#productForm">
-                  <div class="accordion-body">
-                    <div class="mb-3 row">
-                      <div class="col-md-6">
-                        <label for="title" class="form-label">Title*</label>
-                        <input type="text" class="form-control" id="title" formControlName="title" placeholder="Winter Jacket" />
-                        <small class="form-text text-muted">Give your product a short and clear title. 50-60 characters is the recommended length for search engines.</small>
-                      </div>
-                      <div class="col-md-6">
-                        <label for="subtitle" class="form-label">Subtitle</label>
-                        <input type="text" class="form-control" id="subtitle" formControlName="subtitle" placeholder="Warm and cozy..." />
-                      </div>
-                    </div>
-                    <div class="mb-3 row">
-                      <div class="col-md-6">
-                        <label for="handle" class="form-label">Handle</label>
-                        <input type="text" class="form-control" id="handle" formControlName="handle" placeholder="/winter-jacket" />
-                      </div>
-                      <div class="col-md-6">
-                        <label for="material" class="form-label">Material</label>
-                        <input type="text" class="form-control" id="material" formControlName="material" placeholder="100% Cotton" />
-                      </div>
-                    </div>
-                    <div class="mb-3">
-                      <label for="description" class="form-label">Description</label>
-                      <textarea class="form-control" id="description" rows="3" formControlName="description" placeholder="A warm and cozy jacket..."></textarea>
-                      <small class="form-text text-muted">Give your product a short and clear description. 120-160 characters is the recommended length for search engines.</small>
-                    </div>
-                    <div class="form-check form-switch">
-                      <input class="form-check-input" type="checkbox" id="discountable" formControlName="discountable" />
-                      <label class="form-check-label" for="discountable">Discountable</label>
-                    </div>
-                    <small class="form-text text-muted">When unchecked, discounts will not be applied to this product.</small>
+                <div class="mb-3 row">
+                  <div class="col-md-6">
+                    <label for="title" class="form-label">Title*</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="title"
+                      formControlName="title"
+                      placeholder="Winter Jacket"
+                    />
+                    <small class="form-text text-muted"
+                      >Give your product a short and clear title. 50-60
+                      characters is the recommended length for search
+                      engines.</small
+                    >
+                  </div>
+                  <div class="col-md-6">
+                    <label for="subtitle" class="form-label">Subtitle</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="subtitle"
+                      formControlName="subtitle"
+                      placeholder="Warm and cozy..."
+                    />
                   </div>
                 </div>
+                <div class="mb-3 row">
+                  <div class="col-md-6">
+                    <label for="count" class="form-label">Total Count*</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="count"
+                      formControlName="count"
+                      placeholder="Total count"
+                    />
+                    <small class="form-text text-muted">
+                      Give your product total count.
+                    </small>
+                  </div>
+                </div>
+                <div class="mb-3 row">
+                  <div class="col-md-6">
+                    <label for="handle" class="form-label">Handle</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="handle"
+                      formControlName="handle"
+                      placeholder="/winter-jacket"
+                    />
+                  </div>
+                  <div class="col-md-6">
+                    <label for="material" class="form-label">Material</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="material"
+                      formControlName="material"
+                      placeholder="100% Cotton"
+                    />
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label for="description" class="form-label"
+                    >Description</label
+                  >
+                  <textarea
+                    class="form-control"
+                    id="description"
+                    rows="3"
+                    formControlName="description"
+                    placeholder="A warm and cozy jacket..."
+                  ></textarea>
+                  <small class="form-text text-muted"
+                    >Give your product a short and clear description. 120-160
+                    characters is the recommended length for search
+                    engines.</small
+                  >
+                </div>
+
+                <div class="form-check form-switch">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="discountable"
+                    formControlName="discountable"
+                  />
+                  <label class="form-check-label" for="discountable"
+                    >Discountable</label
+                  >
+                </div>
+                <small class="form-text text-muted"
+                  >When unchecked, discounts will not be applied to this
+                  product.</small
+                >
               </div>
             </div>
           </div>
-          <div class="accordion-item">
-            <h2 class="accordion-header">
-              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="true" aria-controls="panelsStayOpen-collapseTwo">
-                Organize Product
-              </button>
-            </h2>
-            <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button
+            class="accordion-button"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#panelsStayOpen-collapseTwo"
+            aria-expanded="false"
+            aria-controls="panelsStayOpen-collapseTwo"
+          >
+            Organize Product
+          </button>
+        </h2>
+        <div
+          id="panelsStayOpen-collapseTwo"
+          class="accordion-collapse collapse"
+        >
+          <div class="accordion-body">
+            <div
+              id="collapseTwo"
+              class="accordion-collapse collapse show"
+              aria-labelledby="headingTwo"
+              data-bs-parent="#productForm"
+            >
               <div class="accordion-body">
-                <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#productForm">
-                  <div class="accordion-body">
-                    <div class="mb-3 row">
-                      <div class="col-md-6">
-                        <label for="type" class="form-label">Type</label>
-                        <select class="form-select" id="type" formControlName="type">
-                          <option selected>Choose a type</option>
-                          <option *ngFor="let type of types" [value]="type.id">{{ type.value }}</option>
-                        </select>
-                      </div>
-                      <div class="col-md-6">
-                        <label for="collection" class="form-label">Collection</label>
-                        <select class="form-select" id="collection" formControlName="collection">
-                          <option selected>Choose a collection</option>
-                          <option *ngFor="let collection of collections" [value]="collection.id">{{ collection.title }}</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="mb-3">
-                      <label for="tags" class="form-label">Tags (comma separated)</label>
-                      <div class="input-group">
-                        <input type="text" class="form-control" formControlName="tagInput" (keyup.enter)="addTags()" />
-                        <button class="btn btn-outline-secondary" type="button" (click)="addTags()">Add</button>
-                      </div>
-                      <div class="mt-2">
-                        <span *ngFor="let tag of tags" class="badge bg-primary me-1">{{ tag }}
-                          <button type="button" class="btn-close btn-close-white btn-sm ms-2" aria-label="Close" (click)="removeTag(tag)"></button>
-                        </span>
-                      </div>
-                      <input type="hidden" id="tags" [value]="tags.join(',')" />
-                    </div>
-                    <div class="form-check form-switch">
-                      <input class="form-check-input" type="checkbox" id="sales-channels" formControlName="salesChannels" />
-                      <label class="form-check-label" for="sales-channels">Sales channels</label>
-                    </div>
-                    <small class="form-text text-muted">This product will only be available in the default sales channel if left untouched.</small>
+                <div class="mb-3 row">
+                  <div class="col-md-6">
+                    <label for="type" class="form-label">Type</label>
+                    <select
+                      class="form-select"
+                      id="type"
+                      formControlName="type"
+                    >
+                      <option selected>Choose a type</option>
+                      <option *ngFor="let type of types" [value]="type.id">
+                        {{ type.value }}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="collection" class="form-label"
+                      >Collection</label
+                    >
+                    <select
+                      class="form-select"
+                      id="collection"
+                      formControlName="collection"
+                    >
+                      <option selected>Choose a collection</option>
+                      <option
+                        *ngFor="let collection of collections"
+                        [value]="collection.id"
+                      >
+                        {{ collection.title }}
+                      </option>
+                    </select>
                   </div>
                 </div>
+                <div class="mb-3">
+                  <label for="tags" class="form-label"
+                    >Tags (comma separated)</label
+                  >
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="tagInput"
+                      (keyup.enter)="addTags()"
+                    />
+                    <button
+                      class="btn btn-outline-secondary"
+                      type="button"
+                      (click)="addTags()"
+                    >
+                      Add
+                    </button>
+                  </div>
+                  <div class="mt-2">
+                    <span *ngFor="let tag of tags" class="badge bg-primary me-1"
+                      >{{ tag }}
+                      <button
+                        type="button"
+                        class="btn-close btn-close-white btn-sm ms-2"
+                        aria-label="Close"
+                        (click)="removeTag(tag)"
+                      ></button>
+                    </span>
+                  </div>
+                  <input type="hidden" id="tags" [value]="tags.join(',')" />
+                </div>
+                <div class="form-check form-switch">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="sales-channels"
+                    formControlName="salesChannels"
+                  />
+                  <label class="form-check-label" for="sales-channels"
+                    >Sales channels</label
+                  >
+                </div>
+                <small class="form-text text-muted"
+                  >This product will only be available in the default sales
+                  channel if left untouched.</small
+                >
               </div>
             </div>
           </div>
-          <div class="accordion-item">
-            <h2 class="accordion-header">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-                Accordion Item #3
-              </button>
-            </h2>
-            <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
-              <div class="accordion-body">
+        </div>
+      </div>
+      <!-- <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button
+            class="accordion-button collapsed"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#panelsStayOpen-collapseThree"
+            aria-expanded="false"
+            aria-controls="panelsStayOpen-collapseThree"
+          >
+            Inventory
+          </button>
+        </h2>
+        <div
+          id="panelsStayOpen-collapseThree"
+          class="accordion-collapse collapse"
+        >
+        <div class="accordion-body">
                 <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-              </div>
-            </div>
-          </div>
         </div>
-        <div class="bottom-spacing">
-          <button type="submit" class="btn btn-primary mt-3">Save as draft</button>
-          <button type="button" class="btn btn-success mt-3 ms-2" (click)="publishProduct()">Publish product</button>
         </div>
+      </div> -->
+    </div>
+    <div class="bottom-spacing">
+      <button type="submit" class="btn btn-primary mt-3">Save as draft</button>
+      <button
+        type="button"
+        class="btn btn-success mt-3 ms-2"
+        (click)="publishProduct()"
+      >
+        Publish product
+      </button>
+    </div>
   </form>
 </div>
