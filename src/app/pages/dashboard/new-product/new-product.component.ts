@@ -1,6 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { Component, OnInit, inject } from "@angular/core";
 import {
+  FormArray,
   FormBuilder,
   FormControl,
   FormGroup,
@@ -10,7 +11,11 @@ import {
 } from "@angular/forms";
 import { Router } from "@angular/router";
 import { ProductService } from "../../../core/services/product.service";
-import { Product, ProductCollection, ProductType } from "../../../core/model/common.model";
+import {
+  Product,
+  ProductCollection,
+  ProductType,
+} from "../../../core/model/common.model";
 
 @Component({
   selector: "app-new-product",
@@ -19,7 +24,7 @@ import { Product, ProductCollection, ProductType } from "../../../core/model/com
   templateUrl: "./new-product.component.html",
   styleUrls: ["./new-product.component.css"],
 })
-export class NewProductComponent implements OnInit{
+export class NewProductComponent implements OnInit {
   form: FormGroup;
   tagInput: string = "";
   tags: string[] = [];
@@ -46,15 +51,16 @@ export class NewProductComponent implements OnInit{
       discountable: new FormControl(false),
       externalId: new FormControl(""),
       profileId: new FormControl(""),
-      weight: new FormControl(""), 
-      length: new FormControl(""),  
+      weight: new FormControl(""),
+      length: new FormControl(""),
       height: new FormControl(""),
       width: new FormControl(""),
       hsCode: new FormControl(""),
       originCountry: new FormControl(""),
       midCode: new FormControl(""),
       material: new FormControl(""),
-      salesChannels: new FormControl(false)
+      salesChannels: new FormControl(false),
+      count: new FormControl(""),
     });
   }
   ngOnInit(): void {
@@ -76,16 +82,20 @@ export class NewProductComponent implements OnInit{
   removeTag(tag: string) {
     this.tags = this.tags.filter((t) => t !== tag);
   }
-  
+
   onSubmit() {
-    if(this.form.valid){
+    if (this.form.valid) {
       const formValue = this.form.value;
-      console.log("publish ",formValue);
+      console.log("publish ", formValue);
 
-      const selectedCollection = this.collections.find(collection => collection.id ===formValue.collection);
-      const selectedType = this.types.find(type => type.id === formValue.type);
+      const selectedCollection = this.collections.find(
+        (collection) => collection.id === formValue.collection
+      );
+      const selectedType = this.types.find(
+        (type) => type.id === formValue.type
+      );
 
-      console.log("collection",selectedCollection);
+      console.log("collection", selectedCollection);
       console.log("type", selectedType);
       const payload: Product = {
         ...formValue,
@@ -94,7 +104,7 @@ export class NewProductComponent implements OnInit{
         description: formValue.description,
         handle: formValue.handle,
         isGiftcard: false,
-        status: 'draft',
+        status: "draft",
         id: "",
         thumbnail: "",
         collectionId: selectedCollection ? { id: selectedCollection.id } : null,
@@ -112,16 +122,17 @@ export class NewProductComponent implements OnInit{
         material: formValue.material,
         createdAt: "",
         updatedAt: "",
-        deletedAt: ""
-      }
+        deletedAt: "",
+        totalCount: formValue.count,
+      };
       this.productService.createProduct(payload).subscribe({
         next: (response) => {
-          console.log('Product created successfully', response);
+          console.log("Product created successfully", response);
           this.close();
         },
         error: (error) => {
-          console.error('Error creating product', error);
-        }
+          console.error("Error creating product", error);
+        },
       });
     }
   }
@@ -130,33 +141,37 @@ export class NewProductComponent implements OnInit{
     if (this.form.valid) {
       const formValue = this.form.value;
 
-      const selectedCollection = this.collections.find(collection => collection.id ===formValue.collection);
-      const selectedType = this.types.find(type => type.id === formValue.type);
-   
+      const selectedCollection = this.collections.find(
+        (collection) => collection.id === formValue.collection
+      );
+      const selectedType = this.types.find(
+        (type) => type.id === formValue.type
+      );
+
       console.log("publish", formValue);
-      console.log("collection",selectedCollection);
+      console.log("collection", selectedCollection);
       console.log("type", selectedType);
       const payload: Product = {
         ...formValue,
         id: "",
-        status: 'published',
+        status: "published",
         collectionId: selectedCollection ? { id: selectedCollection.id } : null,
         typeId: selectedType ? { id: selectedType.id } : null,
         discountable: formValue.discountable,
         isGiftcard: false,
         createdAt: "",
         updatedAt: "",
-        deletedAt: ""
+        deletedAt: "",
       };
 
       this.productService.createProduct(payload).subscribe({
         next: (response) => {
-          console.log('Product published successfully', response);
+          console.log("Product published successfully", response);
           this.close();
         },
         error: (error) => {
-          console.error('Error publishing product', error);
-        }
+          console.error("Error publishing product", error);
+        },
       });
     }
   }

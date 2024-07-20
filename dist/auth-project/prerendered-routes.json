@@ -1,0 +1,16 @@
+{
+  "routes": [
+    "/",
+    "/dashboard",
+    "/login",
+    "/new-product",
+    "/orders",
+    "/products",
+    "/register",
+    "/settings",
+    "/settings/currencies",
+    "/settings/profile",
+    "/settings/reasons",
+    "/settings/regions"
+  ]
+}

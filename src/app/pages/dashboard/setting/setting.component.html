@@ -1,10 +1,11 @@
+
 <div class="container mt-5">
   <h2>General</h2>
   <p>Manage the general settings for your store</p>
 
   <div class="row">
     <div class="col-md-6">
-      <div class="card mb-3">
+      <div routerLink="/settings/api-keys" routerLinkActive="active" class="card mb-3">
         <div class="card-body d-flex align-items-center">
           <i class="bi bi-key me-3"></i>
           <div>
@@ -15,7 +16,7 @@
         </div>
       </div>
 
-      <div class="card mb-3">
+      <div routerLink="/settings/profile" routerLinkActive="active" class="card mb-3">
         <div class="card-body d-flex align-items-center">
           <i class="bi bi-person me-3"></i>
           <div>
@@ -26,7 +27,7 @@
         </div>
       </div>
 
-      <div class="card mb-3">
+      <div routerLink="/settings/reasons" routerLinkActive="active" class="card mb-3">
         <div class="card-body d-flex align-items-center">
           <i class="bi bi-arrow-left-circle me-3"></i>
           <div>
@@ -39,7 +40,7 @@
     </div>
 
     <div class="col-md-6">
-      <div class="card mb-3">
+      <div routerLink="/settings/currencies" routerLinkActive="active" class="card mb-3">
         <div class="card-body d-flex align-items-center">
           <i class="bi bi-currency-exchange me-3"></i>
           <div>
@@ -50,7 +51,7 @@
         </div>
       </div>
 
-      <div class="card mb-3">
+      <div routerLink="/settings/regions" routerLinkActive="active" class="card mb-3">
         <div class="card-body d-flex align-items-center">
           <i class="bi bi-geo me-3"></i>
           <div>
@@ -62,19 +63,19 @@
           <i class="bi bi-chevron-right ms-auto"></i>
         </div>
       </div>
-      <div class="card mb-3">
+      <div routerLink="/settings/inventory" routerLinkActive="active" class="card mb-3">
         <div class="card-body d-flex align-items-center">
           <i class="bi bi-diagram-3 me-3"></i>
           <div>
-            <h5 class="card-title mb-0">Sales Channels</h5>
+            <h5 class="card-title mb-0">Inventory Management</h5>
             <p class="card-text">
-              Control which product are available in which channels
+              Control which product are available in which type
             </p>
           </div>
           <i class="bi bi-chevron-right ms-auto"></i>
         </div>
       </div>
-      <div class="card mb-3">
+      <div routerLink="/settings/taxes" routerLinkActive="active" class="card mb-3">
         <div class="card-body d-flex align-items-center">
           <i class="bi bi-bank me-3"></i>
           <div>
@@ -87,28 +88,3 @@
     </div>
   </div>
 </div>
-
-
-
-<!-- <div class="container mt-5">
-    <h2>General</h2>
-    <p>Manage the general settings for your store</p>
-  
-    <div class="row">
-      <div class="col-md-6 mb-3" *ngFor="let setting of settings">
-        <div class="card-custom">
-          <div class="icon">
-            <i [class]="setting.icon"></i>
-          </div>
-          <div class="content">
-            <h5>{{ setting.title }}</h5>
-            <p>{{ setting.description }}</p>
-          </div>
-          <div class="arrow">
-            <i class="bi bi-chevron-right"></i>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div> -->
-  

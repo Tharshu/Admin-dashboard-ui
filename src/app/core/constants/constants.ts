@@ -21,7 +21,13 @@ export const ApiEndpoint = {
         // UpdateCollection: `${apiUrl}/v1/api/product/collection/`,
         // DeleteCollection: `${apiUrl}/v1/api/product/collection/`,
         // GelbyId: `${apiUrl}/v1/api/product/collection/`
-    }
+    },
+    Currency: {
+        Url:`${apiUrl}/v1/api/currency`
+    },
+    Price: {
+        Url:`${apiUrl}/v1/api/price`
+    },
 };
 
 export const LocalStorage = {

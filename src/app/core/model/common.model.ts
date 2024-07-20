@@ -86,9 +86,28 @@ showDropdown: any;
     originCountry: string;
     midCode: string;
     material: string;
+    totalCount: number;
+    prices: Price[];
     createdAt: string;
     updatedAt: string;
     deletedAt: string;
+}
+
+export interface Price {
+    priceId: number;
+    locationId: number;
+    currencyId: Currencies;
+    productId: string;
+    amount: number;
+}
+
+export interface Currencies {
+    currencyId: number;
+    code: string;
+    name: string;
+    symbol: string;
+    imageUrl: string;
+
 }
 
 export interface Pageable {
