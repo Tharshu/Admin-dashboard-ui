@@ -1,9 +1,316 @@
-<app-back-button></app-back-button>
-<h2>Currencies</h2>
-<p>Manage the product availability based on types in store</p>
-
-<div class="card ms-auto">
-<div class="container">
-
+<div class="mt-5">
+  <app-back-button-product></app-back-button-product>
 </div>
+
+<div class="container overflow-hidden">
+  <div class="row gx-5">
+    <div class="col-md-8 mb-3 mt-5">
+      <div class="card text-bg-light">
+        <div class="container mb-3">
+          <h2 class="mt-3">Inventory</h2>
+          <small>Manage the product availability based on types in store</small>
+        </div>
+      </div>
+      <div class="card mt-3 mb-3 text-bg-light">
+        <div class="container mb-3">
+          <div class="row">
+            <div class="col-12">
+              <h4 class="mt-3">{{ product?.title }}  <i class="fa-solid fa-ellipsis me-auto"></i></h4> 
+             
+              <!-- <div class="text-end align-items-end"> -->
+              <!-- <span
+                class="status-dot"
+
+                [ngClass]="{
+                  'bg-success': product.status === 'published',
+                  'bg-secondary': product.status === 'draft',
+                  'bg-danger': product.status === 'rejected'
+                }"
+                
+              >
+              </span>
+              <span class="status-text">
+                
+                {{
+                  product.status === "published"
+                    ? "published"
+                    : product.status === "draft"
+                    ? "draft"
+                    : "rejected"
+                }}
+              </span> -->
+              <!-- </div> -->
+
+              <p class="text-secondary">
+                Reimagine the feeling of a classic hoodie. With our cotton
+                hoodie, everyday essentials no longer have to be ordinary.
+              </p>
+            </div>
+          </div>
+          <div class="row">
+            <strong class="mb-3">Details</strong>
+            <div class="col text-secondary">
+              <div class="d-flex mb-3">
+                <div class="me-auto p-2">Subtitle:</div>
+                <div class="p-2">{{ product?.subtitle }}</div>
+              </div>
+              <div class="d-flex mb-3">
+                <div class="me-auto p-2">Handle:</div>
+                <div class="p-2">{{ product?.handle || "-" }}</div>
+              </div>
+              <div class="d-flex mb-3">
+                <div class="me-auto p-2">Collection:</div>
+                <div class="p-2">{{ product?.collectionId?.title }}</div>
+              </div>
+              <div class="d-flex mb-3">
+                <div class="me-auto p-2">Discountable:</div>
+                <div class="p-2">
+                  {{ product?.discountable ? "Yes" : "No" }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card mt-3 mb-3 text-bg-light">
+        <div class="container mb-3">
+          <div class="row">
+            <!-- <div class="col-12 mt-3"> -->
+            <div class="d-flex mb-3 mt-3">
+              <div class="me-auto p-2">
+                <h4 class="mt-2">Variants</h4>
+              </div>
+              <button class="btn">
+                <i
+                  class="fa-solid fa-ellipsis"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                ></i>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a
+                      class="dropdown-item"
+                      data-bs-toggle="modal"
+                      data-bs-target="#newModal"
+                      data-bs-whatever="@mdo"
+                      (click)="openModal(false)"
+                      ><i class="fas fa-plus me-2"></i> Add Variant</a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item" (click)="editVariant()"
+                      ><i class="fa-solid fa-sliders me-2"></i> Edit</a
+                    >
+                  </li>
+                </ul>
+              </button>
+            </div>
+
+            <!-- </div> -->
+          </div>
+          <!-- <div class="row"> -->
+          <div class="col-12 mt-3">
+            <strong class="mb-3">Variant title</strong>
+          </div>
+          <div class="col-12 column-gap-3">
+            <span
+              *ngFor="let variant of inventory?.variantDtoList"
+              class="me-2 mt-3 mb-3 badge text-bg-secondary p-2 g-col-6"
+              >{{ variant.variant || "NAN" }}</span
+            >
+          </div>
+          <div class="col-12 mt-3">
+            <strong class="mb-3">Product variants</strong>
+          </div>
+          <div class="col-12 mt-3">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">No</th>
+                  <th scope="col">Title</th>
+                  <th scope="col">Quantity</th>
+                  <th scope="col">Available</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let variant of inventory?.variantDtoList">
+                  <!-- @for (item of items; track $index) {} -->
+                  <th scope="row">{{ variant.inventoryId || "-" }}</th>
+                  <td>{{ variant.title || "-" }}</td>
+                  <td>{{ variant.totalQuantity || 0 }}</td>
+                  <td>
+                    {{ variant.totalQuantity - variant.soldQuantity || 0 }}
+                  </td>
+                  <td>
+                    <button class="btn">
+                      <i
+                        class="fa-solid fa-ellipsis"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                      ></i>
+                      <ul class="dropdown-menu">
+                        <li>
+                          <a
+                            class="dropdown-item"
+                            data-bs-toggle="modal"
+                            data-bs-target="#newModal"
+                            data-bs-whatever="@mdo"
+                            (click)="openModal(true, productId)"
+                            ><i class="fas fa-plus me-2"></i> Edit Variant</a
+                          >
+                        </li>
+                      </ul>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- </div> -->
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mt-5 mb-3">
+      <div class="card text-bg-light">
+        <div class="container">Custom column for images</div>
+      </div>
+    </div>
+  </div>
 </div>
+
+<!-- pop-up -->
+<div
+  class="modal fade"
+  id="newModal"
+  tabindex="-1"
+  aria-labelledby="newModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="newModalLabel">
+          {{ isEditMode ? 'Edit Variant' : 'Add Variant' }}
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <h1 class="modal-title fs-5" id="newModalLabel">General*</h1>
+        <p class="text-secondary">
+          Configure the general information for this variant.
+        </p>
+
+        <form [formGroup]="form">
+          <div class="row">
+            <div class="col">
+              <label for="title" class="col-form-label">Custom title</label>
+              <input
+                type="text"
+                class="form-control"
+                id="title"
+                formControlName="title"
+                placeholder="Green/XL.."
+                aria-label="Green/XL.."
+              />
+            </div>
+            <div class="col">
+              <label for="material" class="col-form-label">Material</label>
+              <input
+                type="text"
+                class="form-control"
+                id="material"
+                formControlName="material"
+                placeholder="80%wool, 20%cotton..."
+                aria-label="80%wool, 20%cotton..."
+              />
+            </div>
+          </div>
+          <div class="row mt-4">
+            <div class="col">
+              <h6><strong>Option</strong></h6>
+            </div>
+          </div>
+          <div class="row mb-5">
+            <div class="col">
+              <label for="variantTitle" class="col-form-label"
+                >Variant title</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="variantTitle"
+                formControlName="variantTitle"
+                placeholder="Saree.."
+                aria-label="Saree.."
+              />
+            </div>
+          </div>
+          <hr />
+          <h1 class="modal-title fs-5" id="newModalLabel">Stock & Inventory</h1>
+          <p class="text-secondary">
+            Configure the inventory and stock for this variant.
+          </p>
+          <div class="row">
+            <div class="col">
+              <label for="totalQuantity" class="col-form-label"
+                >Quantity in stock</label
+              >
+              <input
+                type="number"
+                class="form-control"
+                id="totalQuantity"
+                formControlName="totalQuantity"
+                placeholder="100..."
+                aria-label="100.."
+              />
+            </div>
+
+            <div class="col">
+              <label for="bcode" class="col-form-label">Barcode</label>
+              <input
+                type="text"
+                class="form-control"
+                id="bcode"
+                formControlName="bcode"
+                placeholder="123456789..."
+                aria-label="123456789..."
+              />
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-bs-dismiss="modal"
+          (click)="addVariant(product.id)"
+        >
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- 
+<div class="card container mt-5 mb-4">
+  <div class="row">
+    <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title">Price JSON Data</h5>
+          <ngx-json-viewer [json]="product"></ngx-json-viewer>
+        </div>
+    </div>
+  </div>
+</div> -->

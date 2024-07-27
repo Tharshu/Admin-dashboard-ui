@@ -1,6 +1,35 @@
-<app-back-button></app-back-button>
-<h2>Profile</h2>
-<p>Manage your personal information</p>
+<div class="mt-5">
+  <app-back-button></app-back-button>
+</div>
+
 <!-- The rest of your profile component HTML -->
 
-<p>profile works!</p>
+<div class="card w-50 mt-5">
+  <div class="card-header">
+    <h2>Profile</h2>
+    <p>Manage your personal information</p>
+
+    <img
+      src="https://via.placeholder.com/150"
+      class="profile-image"
+      alt="Profile picture"
+    />
+  </div>
+  <div class="card-body user-details">
+    <div class="form-group">
+      <label for="username">Username:</label>
+      <input id="username" type="text" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input id="email" type="email" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label for="role">Role:</label>
+      <input id="role" type="text" class="form-control" />
+    </div>
+    <div>
+      <button class="btn btn-success">Update</button>
+    </div>
+  </div>
+</div>

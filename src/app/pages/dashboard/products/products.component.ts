@@ -19,16 +19,18 @@ import {
   ReactiveFormsModule,
   Validators,
 } from "@angular/forms";
-import { Router } from "@angular/router";
+import { Router, RouterModule } from "@angular/router";
 import { NgbModal, NgbModalRef } from "@ng-bootstrap/ng-bootstrap";
 import { ProductService } from "../../../core/services/product.service";
-import {
-  Product,
-  ProductCollection,
-  ProductType,
-} from "../../../core/model/common.model";
 import { response } from "express";
 import { Console, error } from "console";
+import { NgxJsonViewerModule } from "ngx-json-viewer";
+import { ProductCollection } from "../../../core/model/product-collection.model";
+import { ProductType } from "../../../core/model/product-type.model";
+import { Product } from "../../../core/model/product.model";
+import { Inventory } from "../../../core/model/inventory.model";
+import { Price } from "../../../core/model/price.model";
+import { InventoryComponent } from "../inventory/inventory.component";
 
 interface Country {
   name: string;
@@ -75,11 +77,12 @@ export class NgbdSortableHeader {
 @Component({
   selector: "app-products",
   standalone: true,
-  imports: [DecimalPipe, NgbdSortableHeader, CommonModule, ReactiveFormsModule],
+  imports: [DecimalPipe, NgbdSortableHeader, CommonModule, ReactiveFormsModule, RouterModule, NgxJsonViewerModule],
   templateUrl: "./products.component.html",
   styleUrl: "./products.component.css",
 })
 export class ProductsComponent implements OnInit {
+
   collectionForm: FormGroup;
   private modalRef?: NgbModalRef;
   productService = inject(ProductService);
@@ -91,6 +94,10 @@ export class ProductsComponent implements OnInit {
   currentPage = 0;
   pageSize = 10;
   totalItems = 0;
+  currentProductPage = 0;
+  productPageSize = 10;
+  productTotalItems = 0;
+  loading: boolean = true;
 
   constructor(
     private fb: FormBuilder,
@@ -108,25 +115,26 @@ export class ProductsComponent implements OnInit {
     // Toggle popover state for the product
     product.showPopover = !product.showPopover;
   }
-  editProduct(_t21: Product, id:String) {
-    this.productService.editProduct(_t21,id).subscribe(
-      {
-        next: (response) => {
-          this.product = response.data;
-          this.getAllProduct();
-        },
-        error: (error) => {
-          console.error("error updating product", error)
-        }
-      }
-    )
-  }
+  // editProduct(_t21: Product, id:String) {
+  //   this.productService.editProduct(_t21,id).subscribe(
+  //     {
+  //       next: (response) => {
+  //         this.product = response.data;
+  //         this.getAllProduct();
+  //       },
+  //       error: (error) => {
+  //         console.error("error updating product", error)
+  //       }
+  //     }
+  //   )
+  // }
   deleteProduct(_id: String) {
     this.productService.deleteProduct(_id).subscribe(
       {
         next: (response) => {
           this.res = response.data;
-          this.getAllProduct();
+          // this.getAllProduct();
+          window.location.reload();
         },
         error: (error) => {
           console.error("error deleting product", error)
@@ -135,16 +143,67 @@ export class ProductsComponent implements OnInit {
     )
   }
 
-  duplicateProduct(_t21: Product) {
-    throw new Error("Method not implemented.");
+  duplicateProduct(product: Product) {
+    const newProduct: Product = {
+      id: '', // Ensure the new product has a unique ID
+      title: `${product.title} (Copy)`, // Optionally modify the title to indicate it's a copy
+      subtitle: `${product.subtitle} (Copy)`,
+      description: product.description,
+      handle: '', // Set a new handle if necessary
+      isGiftcard: product.isGiftcard,
+      status: 'draft', // Set status to 'draft' or another suitable default
+      thumbnail: product.thumbnail,
+      collectionId: product.collectionId,
+      typeId: product.typeId,
+      discountable: product.discountable,
+      externalId: '',
+      profileId: product.profileId,
+      weight: product.weight,
+      length: product.length,
+      height: product.height,
+      width: product.width,
+      hsCode: product.hsCode,
+      originCountry: product.originCountry,
+      midCode: product.midCode,
+      material: product.material,
+      totalCount: product.totalCount,
+      prices: [],
+      // Modify prices array to set new price IDs
+      // prices: product.prices.map(price => ({
+      //   ...price,
+      //   priceId: price.priceId // Set new priceId or modify as needed
+      // })),
+      // Modify inventory list if necessary
+      inventoryDto: product.inventoryDto ? { ...product.inventoryDto } : null, // Copying inventoryDto if it exists, else setting to undefined
+
+      // inventoryDtoList: product.inventoryDtoList.map(inventory => ({
+      //   ...inventory,
+      //   inventoryId: inventory.inventoryId
+      //   // Set or modify inventory properties if needed
+      // })),
+      createdAt: '',
+      updatedAt: '',
+      deletedAt: '',
+
+    };
+    this.productService.createProduct(newProduct).subscribe({
+      next: (response) => {
+        console.log('Product duplicated successfully', response);
+        // this.products.push(response.data); // Add the new product to the local list if needed
+        window.location.reload();      },
+      error: (error) => {
+        console.error('Error duplicating product', error);
+      },
+    });
   }
+
   changeStatus(id: String,status: String) {
     this.productService.changeStatus(id,status).subscribe(
       {
         next: (response) => {
           this.res = response.data;
           console.log("Res => ",this.res);
-          this.getAllProduct();
+          window.location.reload();
         },
         error: (error) => {
           console.error("error updating status.");
@@ -168,13 +227,17 @@ export class ProductsComponent implements OnInit {
 
 
   getAllProduct() {
-    this.productService.getAllProductFilter().subscribe({
+    this.loading = true;
+    this.productService.getAllProductFilter(this.currentProductPage, this.productPageSize).subscribe({
       next: (data) => {
         this.products = data.data.content;
+        this.productTotalItems = data.data.totalElements;
+        this.loading = false;
         console.log("Table data refreshed:", this.products);
       },
       error: (error) => {
         console.error("Error fetching products", error);
+        this.loading = false;
       },
     });
   }
@@ -241,16 +304,19 @@ export class ProductsComponent implements OnInit {
   }
 
   getCollectionData() {
+    this.loading = true;
     this.productService
       .getAllCollection(this.currentPage, this.pageSize)
       .subscribe({
         next: (data) => {
           this.collections = data.data; // Adjust this based on your actual response structure
           // this.totalItems = data.totalItems; // Adjust this based on your actual response structure
+          this.loading = false;
           console.log("Table data refreshed:", this.collections);
         },
         error: (error) => {
           console.error("Error fetching collections", error);
+          this.loading = false;
         },
       });
   }
@@ -260,6 +326,11 @@ export class ProductsComponent implements OnInit {
     this.getCollectionData();
   }
 
+  onProductPageChange(page: number) {
+    this.currentProductPage = page;
+    this.getAllProduct();
+  }
+
   trackById(index: number, item: ProductCollection) {
     return item.id; // Replace with your unique identifier for collections
   }
@@ -267,9 +338,18 @@ export class ProductsComponent implements OnInit {
   get totalPages(): number {
     return Math.ceil(this.totalItems / this.pageSize);
   }
+  get productTotalPages(): number {
+    return Math.ceil(this.productTotalItems / this.productPageSize);
+  }
 
   get totalPagesArray(): number[] {
     return Array(this.totalPages)
+      .fill(0)
+      .map((x, i) => i);
+  }
+
+  get productTotalPagesArray(): number[] {
+    return Array(this.productTotalPages)
       .fill(0)
       .map((x, i) => i);
   }
@@ -289,4 +369,14 @@ export class ProductsComponent implements OnInit {
       }
     }
   }
+
+  navigateToInventory(product: Product) {
+    this.router.navigateByUrl('/products/inventory', { state: { product } });
+  }
+
+  refreshTable() {
+    window.location.reload();
+  }
+
+
 }

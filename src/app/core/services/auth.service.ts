@@ -2,17 +2,16 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, inject, signal } from '@angular/core';
 import {
   ApiListResponse,
-  ApiResponse,
-  LoginPayload,
-  LoginResponse,
-  RefreshtokenReqest,
-  RegisterPayload,
-  User,
+  ApiResponse
 } from '../model/common.model';
 import { ApiEndpoint, LocalStorage } from '../constants/constants';
 import { Observable, catchError, map, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { Console } from 'console';
+import { LoginPayload } from '../model/login-payload.model';
+import { LoginResponse } from '../model/login-response.model';
+import { RegisterPayload } from '../model/register-payload.model';
+import { User } from '../model/user.model';
 
 @Injectable({
   providedIn: 'root',

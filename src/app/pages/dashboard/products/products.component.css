@@ -21,3 +21,14 @@
 .bg-danger {
   background-color: red;
 }
+
+pre {
+  background-color: #f8f9fa;
+  padding: 10px;
+  border-radius: 5px;
+  overflow-x: auto;
+}
+
+.bg-teal-500 {
+  background-color: #38b2ac !important;
+}

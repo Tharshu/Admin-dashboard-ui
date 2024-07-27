@@ -9,11 +9,13 @@ import {
 } from "@angular/forms";
 import { CommonModule } from "@angular/common";
 import { ProductService } from "../../../core/services/product.service";
-import { Currencies, Price, Product } from "../../../core/model/common.model";
 import { CurrencyService } from "../../../core/services/currency.service";
 import { response } from "express";
 import { PriceService } from "../../../core/services/price.service";
 import { Router } from "@angular/router";
+import { Currencies } from "../../../core/model/currencies.model";
+import { Price } from "../../../core/model/price.model";
+import { Product } from "../../../core/model/product.model";
 
 @Component({
   selector: "app-currencies",
@@ -35,9 +37,13 @@ export class CurrenciesComponent implements OnInit {
   currentPage = 0;
   pageSize = 100;
   totalItems = 0;
+  currentProductPage = 0;
+  productPageSize = 10;
+  productTotalItems = 0;
   collections: any;
   totalPagesArray: any;
   totalPages: any;
+  loading: boolean = true;
 
 
   constructor(private fb: FormBuilder,private router: Router) {
@@ -92,7 +98,7 @@ export class CurrenciesComponent implements OnInit {
               },
               locationId: formValue.location,
               amount: formValue.amount,
-              productId: selectedProduct.id,
+              productId: selectedProduct,
             };
             console.log("Payload Price:", payload);
     
@@ -139,7 +145,7 @@ export class CurrenciesComponent implements OnInit {
   }
 
   getAllProduct() {
-    this.productService.getAllProductFilter().subscribe({
+    this.productService.getAllProductFilter(this.currentProductPage, this.productPageSize).subscribe({
       next: (data) => {
         this.products = data.data.content;
         console.log("Table data refreshed:", this.products);
@@ -151,27 +157,33 @@ export class CurrenciesComponent implements OnInit {
   }
 
   getAllCurrency() {
+    this.loading = true;
     this.currencyService
       .getAllCurrencies(this.currentPage, this.pageSize)
       .subscribe({
         next: (data) => {
           this.currencies = data.data;
+          this.loading = false;
           console.log("Table data refreshed:", this.currencies);
         },
         error: (error) => {
+          this.loading = false;
           console.error("Error fetching collections", error);
         },
       });
   }
 
   getAllPrices() {
-    this.priceService.getAllPrice(this.currentPage, this.pageSize).subscribe({
+    this.loading = true;
+    this.priceService.getAllPrice(this.currentProductPage, this.productPageSize).subscribe({
       next: (data) => {
         this.prices = data.data;
+        this.loading = false;
         console.log("Table data refreshed:", this.prices);
 
       },
       error: (error) => {
+        this.loading = false;
         console.error("Error fetching prices", error);
       },
     });
@@ -180,5 +192,22 @@ export class CurrenciesComponent implements OnInit {
   goBack() {
     this.router.navigate(['/settings/currencies']);
   }
+
+  onProductPageChange(page: number) {
+    this.currentProductPage = page;
+    this.getAllPrices();
+  }
+
+  get productTotalPages(): number {
+    return Math.ceil(this.productTotalItems / this.productPageSize);
+  }
+
+
+  get productTotalPagesArray(): number[] {
+    return Array(this.productTotalPages)
+      .fill(0)
+      .map((x, i) => i);
+  }
+
 
 }

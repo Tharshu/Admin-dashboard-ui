@@ -1,14 +1,15 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ApiEndpoint, LocalStorage } from '../constants/constants';
 import { catchError, Observable, throwError } from 'rxjs';
-import { LocalStorage, ApiEndpoint } from '../constants/constants';
-import { ApiResponse, ApiListResponse } from '../model/common.model';
-import { Price } from '../model/price.model';
+import { Inventory } from '../model/inventory.model';
+import { ApiListResponse, ApiResponse } from '../model/common.model';
+import { Currencies } from '../model/currencies.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PriceService {
+export class InventoryService {
 
   constructor(private http: HttpClient) {}
 
@@ -19,31 +20,30 @@ export class PriceService {
     return null;
   }
 
-  createPrice(payload: Price) {
+  private getHeaders(): HttpHeaders {
     const token = this.getUserToken();
-
-    const headers = new HttpHeaders({
+    return new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
+  }
+
+
+  createInventory(payload: Inventory) {
     return this.http
-      .post<ApiResponse<Price>>(
-        `${ApiEndpoint.Price.Url}`,
+      .post<ApiResponse<Inventory>>(
+        `${ApiEndpoint.Inventory.Url}`,
         payload,
-        { headers: headers }
+        { headers: this.getHeaders() }
       )
       .pipe(catchError(this.handleError));
   }
 
-  getAllPrice(page: number, size: number) {
-    const token = this.getUserToken();
+  getInventoryByProductId(productId: string) {
 
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-    });
     return this.http
-      .get<ApiListResponse<Price>>(
-        `${ApiEndpoint.Price.Url}?page=${page}&size=${size}`,
-        { headers: headers }
+      .get<ApiResponse<Inventory>>(
+        `${ApiEndpoint.Inventory.Url}/${productId}`,
+        { headers: this.getHeaders() }
       )
       .pipe(catchError(this.handleError));
   }

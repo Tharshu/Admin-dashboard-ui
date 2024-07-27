@@ -1,0 +1,43 @@
+
+.profile-card {
+    margin: auto;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+
+  .card-header {
+    text-align: center;
+    background-color: #f5f5f5;
+    padding: 20px;
+  }
+
+  .profile-image {
+    display: block;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin: auto;
+  }
+
+  .card-body {
+    padding: 20px;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  .form-control {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  .btn-success {
+    width: 100%;
+  }
+

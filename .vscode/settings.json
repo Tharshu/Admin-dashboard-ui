@@ -1,5 +1,9 @@
 {
     "cSpell.words": [
-        "currencyform"
+        "currencyform",
+        "inventoryform"
+    ],
+    "cSpell.enableFiletypes": [
+        "typescript"
     ]
 }
