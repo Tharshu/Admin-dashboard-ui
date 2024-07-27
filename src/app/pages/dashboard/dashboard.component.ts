@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild, inject, signal } from '@angular/core';
 import { AuthService } from '../../core/services/auth.service';
-import { User } from '../../core/model/common.model';
 import { error } from 'console';
 import { CommonModule } from '@angular/common';
 import { SidePanelComponent } from '../../shared/side-panel/side-panel.component';
 import { ToastComponent } from "../../shared/toast/toast.component";
+import { User } from '../../core/model/user.model';
 
 @Component({
     selector: 'app-dashboard',

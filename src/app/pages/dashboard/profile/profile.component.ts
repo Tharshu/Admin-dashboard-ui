@@ -10,4 +10,10 @@ import { BackButtonComponent } from "../../../shared/back-button/back-button.com
 })
 export class ProfileComponent {
 
+  user = {
+    username: 'JohnDoe',
+    email: 'john.doe@example.com',
+    phone: '123-456-7890'
+  };
+
 }

@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ApiListResponse, ApiResponse, Role } from '../model/common.model';
+import { ApiListResponse, ApiResponse } from '../model/common.model';
 import { ApiEndpoint } from '../constants/constants';
+import { Role } from '../model/role.model';
 
 @Injectable({
   providedIn: 'root'

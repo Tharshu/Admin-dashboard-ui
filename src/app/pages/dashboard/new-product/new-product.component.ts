@@ -11,11 +11,9 @@ import {
 } from "@angular/forms";
 import { Router } from "@angular/router";
 import { ProductService } from "../../../core/services/product.service";
-import {
-  Product,
-  ProductCollection,
-  ProductType,
-} from "../../../core/model/common.model";
+import { ProductCollection } from "../../../core/model/product-collection.model";
+import { ProductType } from "../../../core/model/product-type.model";
+import { Product } from "../../../core/model/product.model";
 
 @Component({
   selector: "app-new-product",
@@ -162,6 +160,22 @@ export class NewProductComponent implements OnInit {
         createdAt: "",
         updatedAt: "",
         deletedAt: "",
+        title: formValue.title,
+        subtitle: formValue.subtitle,
+        description: formValue.description,
+        handle: formValue.handle,
+        thumbnail: "",
+        externalId: "",
+        profileId: "",
+        weight: 0,
+        length: 0,
+        height: 0,
+        width: 0,
+        hsCode: "",
+        originCountry: "",
+        midCode: "",
+        material: formValue.material,
+        totalCount: formValue.count,
       };
 
       this.productService.createProduct(payload).subscribe({

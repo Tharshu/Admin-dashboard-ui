@@ -10,8 +10,9 @@ import { AuthService } from "../../core/services/auth.service";
 import { Router } from "@angular/router";
 import { response } from "express";
 import { MetaService } from "../../core/services/meta.service";
-import { RegisterPayload, Role } from "../../core/model/common.model";
 import { CommonModule } from "@angular/common";
+import { RegisterPayload } from "../../core/model/register-payload.model";
+import { Role } from "../../core/model/role.model";
 
 @Component({
   selector: "app-register",

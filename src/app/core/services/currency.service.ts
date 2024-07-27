@@ -1,8 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApiEndpoint, LocalStorage } from '../constants/constants';
-import { ApiListResponse, ApiResponse, Currencies, ProductCollection } from '../model/common.model';
+import { ApiListResponse, ApiResponse} from '../model/common.model';
 import { catchError, Observable, throwError } from 'rxjs';
+import { Currencies } from '../model/currencies.model';
 
 @Injectable({
   providedIn: 'root'

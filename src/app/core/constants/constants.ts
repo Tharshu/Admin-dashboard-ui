@@ -28,6 +28,9 @@ export const ApiEndpoint = {
     Price: {
         Url:`${apiUrl}/v1/api/price`
     },
+    Inventory: {
+        Url: `${apiUrl}/v1/api/inventory`
+    }
 };
 
 export const LocalStorage = {

@@ -11,7 +11,7 @@
         aria-controls="home-tab-pane"
         aria-selected="true"
       >
-        Products
+        Products ({{ productTotalItems }})
       </button>
       <button
         class="nav-link"
@@ -35,7 +35,15 @@
         aria-labelledby="home-tab"
         tabindex="0"
       >
+
         <div class="text-end">
+          <button
+          type="button"
+          class="btn btn-success me-2"
+          (click)="refreshTable()"
+        >
+        <i class="fa-solid fa-rotate"></i> Refresh Table
+        </button>
           <button
             type="button"
             class="btn btn-success"
@@ -50,15 +58,26 @@
               <th scope="col">Name</th>
               <th scope="col">Collection</th>
               <th scope="col">Status</th>
-              <th scope="col">Availability</th>
+              <th scope="col">Description</th>
               <th scope="col">Inventory</th>
               <th></th>
             </tr>
           </thead>
           <tbody class="table-group-divider">
+            <!-- Spinner displayed while loading -->
+            <div
+              *ngIf="loading"
+              class="d-flex justify-content-center align-items-center position-fixed w-100 h-100"
+              style="top: 0; left: 0"
+            >
+              <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>
+
             @for (product of products; track product.id; let i = $index) {
             <tr>
-              <th scope="row">
+              <th class="text-secondary" scope="row">
                 <!-- <img
                 [src]="
                   'https://upload.wikimedia.org/wikipedia/commons/' +
@@ -71,20 +90,20 @@
                 <!-- {{ i + 1 }} -->
                 {{ product.title }}
               </th>
-              <td>
+              <td class="text-secondary">
                 {{ product.collectionId.title }}
               </td>
               <td>
                 <span
                   class="status-dot"
                   [ngClass]="{
-                    'bg-success': product.status === 'published',
+                    'bg-teal-500': product.status === 'published',
                     'bg-secondary': product.status === 'draft',
                     'bg-danger': product.status === 'rejected'
                   }"
                 >
                 </span>
-                <span class="status-text">
+                <span class="status-text text-secondary">
                   {{
                     product.status === "published"
                       ? "published"
@@ -94,40 +113,62 @@
                   }}
                 </span>
               </td>
-              <td>
+              <td class="text-secondary">
                 {{ product.material }}
               </td>
-              <td>
-                {{ product.totalCount }}
-              </td>
+              <td class="text-secondary">{{ product.inventoryDto?.availableQuantity }} in stock</td>
               <td>
                 <!-- Bootstrap Popover -->
                 <div class="btn-group">
-                  <i class="fa-solid fa-ellipsis" data-bs-toggle="dropdown"
-                  aria-expanded="false"></i>
+                  <i
+                    class="fa-solid fa-ellipsis"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  ></i>
                   <ul class="dropdown-menu">
                     <li>
-                      <a class="dropdown-item" (click)="editProduct(product, product.id)"
-                        ><i class="fa-solid fa-sliders"></i> Edit</a
+                      <button
+                        class="dropdown-item"
+                        [routerLink]="['/products/inventory']"
+                        [queryParams]="{ product: product | json }"
+                        routerLinkActive="active"
                       >
+                        <i class="fa-solid fa-sliders"></i> Edit
+                      </button>
                     </li>
                     <li>
-                      <a class="dropdown-item" (click)="deleteProduct(product.id)"
-                        ><i class="fa-solid fa-trash"></i> Delete</a
+                      <button
+                        class="dropdown-item"
+                        (click)="deleteProduct(product.id)"
                       >
+                        <i class="fa-solid fa-trash"></i> Delete
+                      </button>
                     </li>
                     <li>
-                      <a
+                      <button
                         class="dropdown-item"
                         (click)="duplicateProduct(product)"
-                        ><i class="fa-solid fa-copy"></i> Duplicate</a
                       >
+                        <i class="fa-solid fa-copy"></i> Duplicate
+                      </button>
                     </li>
                     <li>
-                      <a class="dropdown-item" (click)="changeStatus(product.id, product.status === 'published' ? 'draft' : 'published')">
-                        <i class="fa-solid fa-upload"></i> 
-                        {{ product.status === 'published' ? 'draft' : 'publish' }}
-                      </a>
+                      <button
+                        class="dropdown-item"
+                        (click)="
+                          changeStatus(
+                            product.id,
+                            product.status === 'published'
+                              ? 'draft'
+                              : 'published'
+                          )
+                        "
+                      >
+                        <i class="fa-solid fa-upload"></i>
+                        {{
+                          product.status === "published" ? "draft" : "publish"
+                        }}
+                      </button>
                     </li>
                   </ul>
                 </div>
@@ -136,6 +177,42 @@
             }
           </tbody>
         </table>
+
+        <!-- Pagination Controls -->
+        <nav aria-label="Pagination">
+          <ul class="pagination justify-content-end mt-3">
+            <li class="page-item" [class.disabled]="currentProductPage === 0">
+              <button
+                class="page-link"
+                (click)="onProductPageChange(currentProductPage - 1)"
+                [disabled]="currentProductPage === 0"
+              >
+                Previous
+              </button>
+            </li>
+            <li
+              class="page-item"
+              *ngFor="let _ of productTotalPagesArray; let i = index"
+              [class.active]="currentProductPage === i"
+            >
+              <button class="page-link" (click)="onProductPageChange(i)">
+                {{ i + 1 }}
+              </button>
+            </li>
+            <li
+              class="page-item"
+              [class.disabled]="currentProductPage === productTotalPages - 1"
+            >
+              <button
+                class="page-link"
+                (click)="onProductPageChange(currentProductPage + 1)"
+                [disabled]="currentProductPage === productTotalPages - 1"
+              >
+                Next
+              </button>
+            </li>
+          </ul>
+        </nav>
       </div>
       <div
         class="tab-pane fade"
@@ -167,6 +244,17 @@
             </tr>
           </thead>
           <tbody class="table-group-divider">
+            <!-- Spinner displayed while loading -->
+            <div
+              *ngIf="loading"
+              class="d-flex justify-content-center align-items-center position-fixed w-100 h-100"
+              style="top: 0; left: 0"
+            >
+              <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>
+
             @for (collection of collections; track collection.id; let i =
             $index) {
             <tr>
@@ -298,6 +386,20 @@
           </div>
         </form>
       </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div class="card container mt-5 mb-4">
+  <div class="row">
+    <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title">Product JSON Data</h5>
+          <ngx-json-viewer [json]="products"></ngx-json-viewer>
+        </div>
     </div>
   </div>
 </div>

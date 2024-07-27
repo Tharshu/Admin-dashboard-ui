@@ -40,7 +40,7 @@ export const routes: Routes = [
           { path: 'settings/currencies', component: CurrenciesComponent },
           { path: 'settings/regions', component: RegionsComponent },
           { path: 'settings/reasons', component: ReasonsComponent },
-          { path: 'settings/inventory', component: InventoryComponent},
+          { path: 'products/inventory', component: InventoryComponent},
 
         ]
       },
