@@ -1,4 +1,193 @@
-<app-back-button></app-back-button>
-<h2>Reasons</h2>
-<p>Manage the reasons of your store</p>
-<p>reasons works!</p>
+<div class="mt-5">
+  <app-back-button></app-back-button>
+</div>
+
+<div class="container px-4">
+  <div class="row gx-5 mt-5">
+    <div class="col">
+      <div class="card">
+        <div class="container">
+          <div class="row">
+            <div class="d-flex mb-1 mt-3">
+              <div class="me-auto p-2">
+                <h3>Return Reasons</h3>
+              </div>
+              <button
+                class="btn btn-sm"
+                data-bs-toggle="modal"
+                data-bs-target="#newModal"
+                data-bs-whatever="@mdo"
+              >
+                <i class="fas fa-plus me-2"></i>
+                <strong> Add Variant</strong>
+              </button>
+            </div>
+          </div>
+          <p class="text-secondary">Manage the reasons of your store</p>
+
+          <div class="container">
+            <div
+              class="card mb-3 reason-card"
+              *ngFor="let reason of reasons"
+              (click)="selectReason(reason)"
+            >
+              <div class="card-body d-flex align-items-center">
+                <input
+                  type="radio"
+                  name="reason"
+                  [id]="reason.code"
+                  class="form-check-input"
+                  [checked]="selectedReasonId === reason.id"
+                  [value]="reason.id"
+                />
+                <label [for]="reason.code" class="ms-3 w-100 mb-0">
+                  <h5 class="card-title mb-1">{{ reason.reasons }}</h5>
+                  <p class="card-text text-muted">{{ reason.description }}</p>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card" *ngIf="selectedReason">
+        <div class="card-body">
+          <h5 class="card-title">Details</h5>
+          <p class="card-text mb-5">{{ selectedCode }}</p>
+          <div class="mt-3 mb-3">
+            <label class="card-text"><strong>Label:</strong> </label>
+            <input
+              type="text"
+              class="form-control"
+              id="code"
+              placeholder="Ex: WRONG_SIZE"
+              value="{{ selectedReason }}"
+            />
+          </div>
+          <div class="mt-2 mb-3">
+            <label class="card-text"><strong>Description:</strong> </label>
+            <input
+              type="text"
+              class="form-control"
+              id="code"
+              placeholder="Ex: Description ...."
+              value="{{ selectedDescription }}"
+            />
+          </div>
+          <div>
+            <label>Active:</label>
+            <div class="form-check form-switch">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                role="switch"
+                id="flexSwitchCheckDefault"
+                [checked]="selectedActive"
+                (change)="toggleBlock(selectedActive)"
+              />
+              <label class="form-check-label">
+                <span
+                  [ngClass]="{
+                    'text-danger': selectedActive,
+                    'text-success': !selectedActive
+                  }"
+                >
+                </span>
+              </label>
+            </div>
+          </div>
+
+          <div class="d-grid gap-2 d-md-flex mt-4 mb-3 justify-content-md-end">
+            <button class="btn btn-secondary" (click)="clearSelection()">
+              Cancel
+            </button>
+            <button class="btn btn-primary ms-2">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- pop-up -->
+
+<div
+  class="modal modal-lg fade"
+  id="newModal"
+  tabindex="-1"
+  aria-labelledby="newModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="newModalLabel">Create reason</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="form" (ngSubmit)="createReason()">
+          <div class="row">
+            <div class="col mb-3">
+              <label for="code" class="col-form-label">Reason Code:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="code"
+                formControlName="code"
+                placeholder="Ex: WRONG_SIZE"
+              />
+            </div>
+            <div class="col mb-3">
+              <label for="reasons" class="col-form-label">Reason:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="reasons"
+                formControlName="reasons"
+                placeholder="Ex: Wrong size"
+              />
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="description" class="col-form-label">Description:</label>
+            <!-- <input
+              type="text"
+              class="form-control"
+              id="description"
+              formControlName="description"
+              placeholder=" Ex: Description ..."
+            /> -->
+            <textarea
+              type="text"
+              class="form-control"
+              id="description"
+              formControlName="description"
+              placeholder=" Ex: Description ..."
+            ></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-bs-dismiss="modal"
+          (click)="createReason()"
+        >
+          Create new Reason
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

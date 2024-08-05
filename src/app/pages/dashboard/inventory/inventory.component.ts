@@ -26,6 +26,7 @@ export class InventoryComponent implements OnInit{
   product: Product | any;
   inventory: Inventory | any;
   variants: Variant[] = [];
+  selectedVariant: Variant | any;
   productId: any;
   totalqty: any;
   isEditMode = false;
@@ -73,18 +74,25 @@ export class InventoryComponent implements OnInit{
 
   }
 
-  openModal(editMode: boolean, productId: string | null = null) {
+  openModal(editMode: boolean, productId: string | null = null, variant: Variant | null = null) {
     this.isEditMode = editMode;
+    this.selectedVariant = variant;
+    console.log("selected variant", this.selectedVariant);
     this.productId = productId;
-    if (editMode && productId) {
-      // Fetch the variant details and populate the form
-      this.inventoryService.getInventoryByProductId(productId).subscribe((data) => {
-        this.form.patchValue(data);
+    if (editMode && this.selectedVariant) {
+      // Map the variant object to form controls
+      this.form.patchValue({
+        title: this.selectedVariant.title,
+        material: this.selectedVariant.material,
+        variantTitle: this.selectedVariant.variant,
+        totalQuantity: this.selectedVariant.totalQuantity,
+        bcode: '' // Adjust this if there's a corresponding field in your Variant
       });
     } else {
       this.form.reset(); // Reset the form for adding new variant
     }
   }
+  
 
   getInventoryByProductId(productId: string){
     this.inventoryService.getInventoryByProductId(productId).subscribe({

@@ -40,6 +40,7 @@ export class LoginComponent implements OnInit{
 
           if (response.status) {
             this.toastComponent.showSuccessToast('Login successful!');
+            localStorage.setItem("email", this.form.value.username);
             this.authService.isLoggedIn.update(() => true);
             this.router.navigate(['']); // Navigate to home page
           } else {

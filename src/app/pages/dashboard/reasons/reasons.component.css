@@ -1,0 +1,22 @@
+.reason-card {
+    border: 2px solid #d1c4e9; /* Light purple border */
+    border-radius: 10px;
+    cursor: pointer; /* Makes the entire card clickable */
+  }
+  
+  .reason-card input[type="radio"] {
+    accent-color: #6f42c1; /* Customize the radio button color */
+  }
+  
+  .reason-card label {
+    cursor: pointer; /* Ensures the label is also clickable */
+  }
+  
+  .card-title {
+    font-weight: bold;
+  }
+  
+  .card-text {
+    color: grey;
+  }
+  

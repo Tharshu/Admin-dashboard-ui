@@ -13,10 +13,34 @@
       </div>
       <div class="card mt-3 mb-3 text-bg-light">
         <div class="container mb-3">
+          <div class="row mt-4">
+            <div class="col">
+              <h4>{{ product?.title }}</h4>
+            </div>
+            <div class="col d-md-flex justify-content-md-end">
+              <i
+                type="button"
+                class="fa-solid fa-ellipsis me-2"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <ul class="dropdown-menu">
+                  <li>
+                    <a
+                      class="dropdown-item"
+                      data-bs-toggle="modal"
+                      data-bs-target="#staticBackdrop"
+                      data-bs-whatever="@"
+                      ><i class="fas fa-plus me-2"></i> Edit Product</a
+                    >
+                  </li>
+                </ul>
+              </i>
+            </div>
+          </div>
+
           <div class="row">
             <div class="col-12">
-              <h4 class="mt-3">{{ product?.title }}  <i class="fa-solid fa-ellipsis me-auto"></i></h4> 
-             
               <!-- <div class="text-end align-items-end"> -->
               <!-- <span
                 class="status-dot"
@@ -97,11 +121,11 @@
                       ><i class="fas fa-plus me-2"></i> Add Variant</a
                     >
                   </li>
-                  <li>
+                  <!-- <li>
                     <a class="dropdown-item" (click)="editVariant()"
                       ><i class="fa-solid fa-sliders me-2"></i> Edit</a
                     >
-                  </li>
+                  </li> -->
                 </ul>
               </button>
             </div>
@@ -136,7 +160,7 @@
               <tbody>
                 <tr *ngFor="let variant of inventory?.variantDtoList">
                   <!-- @for (item of items; track $index) {} -->
-                  <th scope="row">{{ variant.inventoryId || "-" }}</th>
+                  <th scope="row">{{ variant.variantId || "-" }}</th>
                   <td>{{ variant.title || "-" }}</td>
                   <td>{{ variant.totalQuantity || 0 }}</td>
                   <td>
@@ -156,7 +180,7 @@
                             data-bs-toggle="modal"
                             data-bs-target="#newModal"
                             data-bs-whatever="@mdo"
-                            (click)="openModal(true, productId)"
+                            (click)="openModal(true, productId, variant)"
                             ><i class="fas fa-plus me-2"></i> Edit Variant</a
                           >
                         </li>
@@ -179,7 +203,7 @@
   </div>
 </div>
 
-<!-- pop-up -->
+<!-- pop-up for variant -->
 <div
   class="modal fade"
   id="newModal"
@@ -191,7 +215,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="newModalLabel">
-          {{ isEditMode ? 'Edit Variant' : 'Add Variant' }}
+          {{ isEditMode ? "Edit Variant" : "Add Variant" }}
         </h1>
         <button
           type="button"
@@ -302,7 +326,95 @@
   </div>
 </div>
 
+<!-- pop-up Modal for product edit-->
+<div
+  class="modal fade"
+  id="staticBackdrop"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Product</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label"
+            >Email address</label
+          >
+          <input
+            type="email"
+            class="form-control"
+            id="exampleFormControlInput1"
+            placeholder="name@example.com"
+          />
+        </div>
+        
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label"
+            >Email address</label
+          >
+          <input
+            type="email"
+            class="form-control"
+            id="exampleFormControlInput1"
+            placeholder="name@example.com"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label"
+            >Email address</label
+          >
+          <input
+            type="email"
+            class="form-control"
+            id="exampleFormControlInput1"
+            placeholder="name@example.com"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label"
+            >Email address</label
+          >
+          <input
+            type="email"
+            class="form-control"
+            id="exampleFormControlInput1"
+            placeholder="name@example.com"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label"
+            >Email address</label
+          >
+          <input
+            type="email"
+            class="form-control"
+            id="exampleFormControlInput1"
+            placeholder="name@example.com"
+          />
+        </div>
 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn btn-primary">Update</button>
+      </div>
+    </div>
+  </div>
+</div>
 <!-- 
 <div class="card container mt-5 mb-4">
   <div class="row">
