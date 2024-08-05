@@ -5,7 +5,7 @@ import { appConfig } from './app/app.config';
 import { AppComponent } from './app/app.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { enableProdMode, importProvidersFrom } from '@angular/core';
-import { authInterceptor } from './app/core/interceptors/auth.interceptor';
+// import { authInterceptor } from './app/core/interceptors/auth.interceptor';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { environment } from './environments/environment.dev';
 

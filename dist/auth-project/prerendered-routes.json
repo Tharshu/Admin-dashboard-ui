@@ -6,6 +6,7 @@
     "/new-product",
     "/orders",
     "/products",
+    "/products/inventory",
     "/register",
     "/settings",
     "/settings/currencies",

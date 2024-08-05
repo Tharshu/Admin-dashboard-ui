@@ -79,6 +79,15 @@ export class AuthService {
     return this._http.get<ApiListResponse<User>>(`${ApiEndpoint.Auth.Getallusers}`, { headers: headers });
     // return this._http.get<ApiListResponse<User>>(`${ApiEndpoint.Auth.Getallusers}`); 
   }
+  getUserByEmail(email: string){
+        // const token = localStorage.getItem(LocalStorage.token);
+        const token = this.getUserToken();
+
+        const headers = new HttpHeaders({
+          'Authorization': `Bearer ${token}`
+        });
+      return this._http.get<ApiResponse<User>>(`${ApiEndpoint.Auth.user}/${email}`, {headers: headers});
+  }
 
   updateUserBlockStatus(id: number, block: boolean){
     const token = this.getUserToken();

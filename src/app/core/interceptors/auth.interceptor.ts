@@ -1,44 +1,44 @@
-import { HttpErrorResponse, HttpEvent, HttpHandler, HttpHandlerFn, HttpInterceptor, HttpInterceptorFn, HttpRequest } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
-import { AuthService } from '../services/auth.service';
-import { Observable, catchError, retry, throwError } from 'rxjs';
-import { LocalStorage } from '../constants/constants';
-import { Router } from '@angular/router';
+// import { HttpErrorResponse, HttpEvent, HttpHandler, HttpHandlerFn, HttpInterceptor, HttpInterceptorFn, HttpRequest } from '@angular/common/http';
+// import { Injectable, inject } from '@angular/core';
+// import { AuthService } from '../services/auth.service';
+// import { Observable, catchError, retry, throwError } from 'rxjs';
+// import { LocalStorage } from '../constants/constants';
+// import { Router } from '@angular/router';
 
 
-export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  const authService = inject(AuthService);
-  const router = inject(Router);
+// export const authInterceptor: HttpInterceptorFn = (req, next) => {
+//   const authService = inject(AuthService);
+//   const router = inject(Router);
 
-  const token = authService.getUserToken();
+//   const token = authService.getUserToken();
 
-  if (token) {
-    console.log("auth interceptor");
-    req = req.clone({
-      setHeaders: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-  }
+//   if (token) {
+//     console.log("auth interceptor");
+//     req = req.clone({
+//       setHeaders: {
+//         Authorization: `Bearer ${token}`,
+//       },
+//     });
+//   }
 
-  return next(req).pipe(
-    retry(2),
-    catchError((e: HttpErrorResponse) => {
-      if (e.status === 401) {
-        authService.logout();
-        localStorage.removeItem('token');  // Assuming LocalStorage.token is a string 'token'
-        router.navigate(['']);
-      }
+//   return next(req).pipe(
+//     retry(2),
+//     catchError((e: HttpErrorResponse) => {
+//       if (e.status === 401) {
+//         authService.logout();
+//         localStorage.removeItem('token');  // Assuming LocalStorage.token is a string 'token'
+//         router.navigate(['']);
+//       }
 
-      // Log the full error response for debugging purposes
-      console.error('HTTP error response:', e);
+//       // Log the full error response for debugging purposes
+//       console.error('HTTP error response:', e);
 
-      // Provide a more detailed default error message
-      const errorMessage = e.error?.message || e.message || `An error occurred: ${e.status} - ${e.statusText}`;
-      return throwError(() => new Error(errorMessage));
-    })
-  );
-};
+//       // Provide a more detailed default error message
+//       const errorMessage = e.error?.message || e.message || `An error occurred: ${e.status} - ${e.statusText}`;
+//       return throwError(() => new Error(errorMessage));
+//     })
+//   );
+// };
 
 // @Injectable()
 // export class AuthInterceptor implements HttpInterceptor {
