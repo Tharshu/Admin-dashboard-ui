@@ -1,39 +1,43 @@
 import { environment } from "../../../environments/environment.dev";
 
 const apiUrl = environment.apiEndpoint;
+const version = environment.v1;
 
 export const ApiEndpoint = {
   Auth: {
-    Register: `${apiUrl}/user/signUp`,
-    Login: `${apiUrl}/auth/login`,
-    Getallusers: `${apiUrl}/user/all`,
-    Refreshtoken: `${apiUrl}/auth/refreshToken`,
-    Blockuser: `${apiUrl}/user`,
-    user: `${apiUrl}/user/email`,
+    Register: `${apiUrl}/api/v1/user/signUp`,
+    Login: `${apiUrl}/api/v1/auth/login`,
+    Getallusers: `${apiUrl}/api/v1/user/all`,
+    Refreshtoken: `${apiUrl}/api/v1/auth/refreshToken`,
+    Blockuser: `${apiUrl}/api/v1/user`,
+    user: `${apiUrl}/api/v1/user/email`,
   },
   Meta: {
-    Roles: `${apiUrl}/meta/roles`,
+    Roles: `${apiUrl}/api/v1/meta/roles`,
   },
   Product: {
-    Collection: `${apiUrl}/v1/api/product/collection`,
-    Type: `${apiUrl}/v1/api/product/product-type`,
-    Prod: `${apiUrl}/v1/api/product`,
+    Collection: `${apiUrl}/api/v1/product/collection`,
+    Type: `${apiUrl}/api/v1/product/product-type`,
+    Prod: `${apiUrl}/api/v1/product`,
     // GetAllCollection: `${apiUrl}/v1/api/product/collection`,
     // UpdateCollection: `${apiUrl}/v1/api/product/collection/`,
     // DeleteCollection: `${apiUrl}/v1/api/product/collection/`,
     // GelbyId: `${apiUrl}/v1/api/product/collection/`
   },
   Currency: {
-    Url: `${apiUrl}/v1/api/currency`,
+    Url: `${apiUrl}/api/v1/currency`,
   },
   Price: {
-    Url: `${apiUrl}/v1/api/price`,
+    Url: `${apiUrl}/api/v1/price`,
   },
   Inventory: {
-    Url: `${apiUrl}/v1/api/inventory`,
+    Url: `${apiUrl}/api/v1/inventory`,
   },
   Reason: {
-    Url: `${apiUrl}/v1/api/reason`,
+    Url: `${apiUrl}/api/v1/reason`,
+  },
+  Orders: {
+    Url: `${apiUrl}/api/v1/order`,
   },
 };
 

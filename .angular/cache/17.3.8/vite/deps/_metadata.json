@@ -1,61 +1,61 @@
 {
-  "hash": "7cb1625a",
-  "configHash": "6108abdc",
-  "lockfileHash": "e42c2b2d",
-  "browserHash": "09df48f4",
+  "hash": "9fded2c4",
+  "configHash": "941c1c26",
+  "lockfileHash": "b612ecd1",
+  "browserHash": "598e6b80",
   "optimized": {
     "@angular/common": {
       "src": "../../../../../node_modules/@angular/common/fesm2022/common.mjs",
       "file": "@angular_common.js",
-      "fileHash": "2b9ff7c4",
+      "fileHash": "5380aa11",
       "needsInterop": false
     },
     "@angular/common/http": {
       "src": "../../../../../node_modules/@angular/common/fesm2022/http.mjs",
       "file": "@angular_common_http.js",
-      "fileHash": "1b348775",
+      "fileHash": "6b967641",
       "needsInterop": false
     },
     "@angular/core": {
       "src": "../../../../../node_modules/@angular/core/fesm2022/core.mjs",
       "file": "@angular_core.js",
-      "fileHash": "87b85019",
+      "fileHash": "0d7a6e44",
       "needsInterop": false
     },
     "@angular/forms": {
       "src": "../../../../../node_modules/@angular/forms/fesm2022/forms.mjs",
       "file": "@angular_forms.js",
-      "fileHash": "bd702121",
+      "fileHash": "dccb267c",
       "needsInterop": false
     },
     "@angular/platform-browser": {
       "src": "../../../../../node_modules/@angular/platform-browser/fesm2022/platform-browser.mjs",
       "file": "@angular_platform-browser.js",
-      "fileHash": "593dd0b5",
+      "fileHash": "3c59bab6",
       "needsInterop": false
     },
     "@angular/router": {
       "src": "../../../../../node_modules/@angular/router/fesm2022/router.mjs",
       "file": "@angular_router.js",
-      "fileHash": "1c107a6a",
+      "fileHash": "f107a7c6",
       "needsInterop": false
     },
     "@ng-bootstrap/ng-bootstrap": {
       "src": "../../../../../node_modules/@ng-bootstrap/ng-bootstrap/fesm2022/ng-bootstrap.mjs",
       "file": "@ng-bootstrap_ng-bootstrap.js",
-      "fileHash": "982caaa2",
+      "fileHash": "f0acc679",
       "needsInterop": false
     },
     "ngx-json-viewer": {
       "src": "../../../../../node_modules/ngx-json-viewer/fesm2020/ngx-json-viewer.mjs",
       "file": "ngx-json-viewer.js",
-      "fileHash": "46d93da3",
+      "fileHash": "2746ff5e",
       "needsInterop": false
     },
     "rxjs": {
       "src": "../../../../../node_modules/rxjs/dist/esm5/index.js",
       "file": "rxjs.js",
-      "fileHash": "182cc837",
+      "fileHash": "c2bbf0b6",
       "needsInterop": false
     }
   },
