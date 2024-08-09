@@ -17,31 +17,54 @@
           <th scope="col">Total</th>
         </tr>
       </thead>
-      <tbody class="table-group-divider text-center">
-        <tr *ngFor="let order of orders; let i = index">
-          <td>{{ order.orderId }}</td>
-          <td>{{ order.orderDate }}</td>
-          <td>{{ order.customerName }}</td>
-          <td>{{ order.totalQuantity }}</td>
-          <td>{{ order.status }}</td>
-          <td>{{ order.finalPrice }}</td>
-        </tr>
-      </tbody>
+      <tr
+        *ngFor="let order of orders; let i = index"
+        (click)="goToOrderDetail(order)"
+        style="cursor: pointer; transition: background-color 0.3s"
+        (mouseover)="highlightRow($event)"
+        (mouseout)="removeHighlight($event)"
+        class="text-center"
+      >
+        <td>{{ order.orderId }}</td>
+        <td>{{ order.orderDate }}</td>
+        <td>{{ order.customerName }}</td>
+        <td>{{ order.totalQuantity }}</td>
+        <td>
+          <span class="badge" 
+          [ngClass]="{
+            'text-bg-danger': order.status === 'CANCELLED',
+            'text-bg-info': order.status === 'PLACED',
+            'text-bg-success': order.status === 'IN PROGRESS',
+            'text-bg-secondary': order.status === 'DONE'
+          }">
+      {{ order.status }}
+    </span>
+        </td>
+        <td>{{ order.finalPrice }}</td>
+      </tr>
     </table>
   </div>
 
   <!-- Pagination Controls -->
-  <div class="d-flex justify-content-center mt-3">
+  <div class="d-flex justify-content-end me-3">
     <nav aria-label="Page navigation">
       <ul class="pagination">
         <li class="page-item" [class.disabled]="currentPage === 0">
-          <a class="page-link" href="#" (click)="onPageChange(currentPage - 1)">Previous</a>
+          <a class="page-link" (click)="onPageChange(currentPage - 1)"
+            >Previous</a
+          >
         </li>
-        <li class="page-item" *ngFor="let page of [].constructor(totalPages); let i = index">
-          <a class="page-link" href="#" (click)="onPageChange(i)">{{ i + 1 }}</a>
+        <li
+          class="page-item"
+          *ngFor="let page of [].constructor(totalPages); let i = index"
+        >
+          <a class="page-link" (click)="onPageChange(i)">{{ i + 1 }}</a>
         </li>
-        <li class="page-item" [class.disabled]="(currentPage + 1) * pageSize >= totalItems">
-          <a class="page-link" href="#" (click)="onPageChange(currentPage + 1)">Next</a>
+        <li
+          class="page-item"
+          [class.disabled]="(currentPage + 1) * pageSize >= totalItems"
+        >
+          <a class="page-link" (click)="onPageChange(currentPage + 1)">Next</a>
         </li>
       </ul>
     </nav>
