@@ -1,0 +1,9 @@
+/* Apply pointer cursor to the row */
+.clickable-row {
+  cursor: pointer;
+}
+
+/* Change background color on hover */
+.clickable-row:hover {
+  background-color: #e2e6ee !important; /* Light blue background on hover */
+}
