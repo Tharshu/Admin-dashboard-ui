@@ -355,7 +355,7 @@ export class ProductsComponent implements OnInit {
   }
 
   navigateToNewProduct() {
-    this.router.navigate(["/new-product"]);
+    this.router.navigate(["products/new-product"]);
   }
 
   @ViewChildren(NgbdSortableHeader)

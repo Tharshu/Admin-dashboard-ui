@@ -15,6 +15,7 @@ import { RegionsComponent } from './pages/dashboard/regions/regions.component';
 import { ProfileComponent } from './pages/dashboard/profile/profile.component';
 import { ReasonsComponent } from './pages/dashboard/reasons/reasons.component';
 import { InventoryComponent } from './pages/dashboard/inventory/inventory.component';
+import { DiscountComponent } from './pages/dashboard/discount/discount.component';
 
 export const routes: Routes = [
 
@@ -26,7 +27,7 @@ export const routes: Routes = [
           { path: 'dashboard', canActivate:[authGuard], component: DashboardComponent },
           { path: 'orders', component: OrdersComponent},
           { path: 'products', component: ProductsComponent},
-          { path: 'new-product', component: NewProductComponent},
+          { path: 'products/new-product', component: NewProductComponent},
           { path: 'settings', component: SettingComponent,
             // children: [
             //   { path: 'profile', component: ProfileComponent },
@@ -41,6 +42,7 @@ export const routes: Routes = [
           { path: 'settings/regions', component: RegionsComponent },
           { path: 'settings/reasons', component: ReasonsComponent },
           { path: 'products/inventory', component: InventoryComponent},
+          { path: 'settings/discounts', component: DiscountComponent},
 
         ]
       },
