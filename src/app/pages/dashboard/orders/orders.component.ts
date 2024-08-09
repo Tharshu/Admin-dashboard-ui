@@ -3,6 +3,7 @@ import { OrdersService } from '../../../core/services/orders.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { OrderRes } from '../../../core/model/orderRes.model';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-orders',
@@ -23,7 +24,7 @@ form: FormGroup;
 orders: OrderRes[] = [];
 
 
-constructor(private fb: FormBuilder) {
+constructor(private fb: FormBuilder,private router: Router) {
   this.form = this.fb.group({});
 }
 
@@ -48,5 +49,20 @@ onPageChange(page: number) {
   this.currentPage = page;
   this.getAllOrders();
 }
+
+
+goToOrderDetail(order: OrderRes) {
+  // Navigate to the order-detail page and pass the order ID
+  this.router.navigate(['/order-detail', order.orderId]);
+}
+
+highlightRow(event: MouseEvent) {
+  (event.currentTarget as HTMLElement).style.backgroundColor = '#e2e6ee';
+}
+
+removeHighlight(event: MouseEvent) {
+  (event.currentTarget as HTMLElement).style.backgroundColor = '';
+}
+
 
 }
