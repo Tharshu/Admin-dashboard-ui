@@ -6,6 +6,7 @@ import { OrderRes } from '../model/orderRes.model';
 import { catchError, Observable, throwError } from 'rxjs';
 import { ApiListResponse, ApiResponse, PageResponse } from '../model/common.model';
 import { ProductCollection } from '../model/product-collection.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ import { ProductCollection } from '../model/product-collection.model';
 export class OrdersService {
   private cacheService = inject(CachingService);
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,private _toastr: ToastrService) {}
 
   getUserToken() {
     if (typeof localStorage !== "undefined") {
@@ -44,12 +45,9 @@ export class OrdersService {
       );
   }
 
-
-
-
-
   private handleError(error: any): Observable<never> {
     console.error("An error occurred:", error);
+    this._toastr.error('An error occurred while fetching orders.');
     return throwError(
       () => new Error("Something bad happened; please try again later.")
     );

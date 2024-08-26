@@ -5,6 +5,7 @@ import { response } from 'express';
 import { Router } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { ToastComponent } from '../../shared/toast/toast.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'app-login',
@@ -19,7 +20,7 @@ export class LoginComponent implements OnInit{
   authService = inject(AuthService);
   router = inject(Router);
 
-  constructor(private fb: FormBuilder){
+  constructor(private fb: FormBuilder,private _toastr: ToastrService){
     this.form = this.fb.group({
       username: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required]),
@@ -39,17 +40,17 @@ export class LoginComponent implements OnInit{
         next:(response)=>{
 
           if (response.status) {
-            this.toastComponent.showSuccessToast('Login successful!');
+            this._toastr.success('Login successful!',"Success");
             localStorage.setItem("email", this.form.value.username);
             this.authService.isLoggedIn.update(() => true);
             this.router.navigate(['']); // Navigate to home page
           } else {
-            this.toastComponent.showErrorToast('Login failed. Please try again.');
+            this._toastr.error('Login failed. Please try again.','Error');
           }
         },
         error: (error) => {
           console.error('Login error:', error);
-          this.toastComponent.showErrorToast('An error occurred. Please try again later.');
+          this._toastr.error('Login failed. Please try again.','Error');
         }
       })
     }
