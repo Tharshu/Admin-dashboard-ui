@@ -20,8 +20,7 @@
               Choose a product...
             </option>
             <option *ngFor="let product of products" [value]="product.id">
-              {{ product.title + "" }} {{ "-" }} {{ "/" + product.handle }}
-              {{ "-" }} {{ product.subtitle }}
+              {{ product.id + "-" }} {{ product.title + "" }} {{ "-" }} {{ product.subtitle }}
             </option>
           </select>
         </div>
@@ -169,6 +168,7 @@
           <th scope="col">Price</th>
           <th scope="col">Currency Code</th>
           <th scope="col">Product Name</th>
+          <th scope="col">Product ID</th>
         </tr>
       </thead>
       <tbody>
@@ -199,6 +199,7 @@
             {{ price.currencyId.code }}
           </td>
           <td>{{ price.productId.title }}</td>
+          <td>{{ price.productId.id }}</td>
         </tr>
         }
       </tbody>
